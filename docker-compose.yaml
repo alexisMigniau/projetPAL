@@ -1,0 +1,49 @@
+version: '3.8'
+
+services: 
+  mysqldb:
+    image: mysql
+    restart: always
+    env_file: .env
+    ports:
+      - $MYSQL_LOCAL_PORT:$MYSQL_DOCKER_PORT
+    volumes: 
+      - ./db:/docker-entrypoint-initdb.d
+  phpmyadmin:
+    depends_on:
+      - mysqldb
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - '$PMA_LOCAL_PORT:$PMA_DOCKER_PORT'
+    environment:
+      PMA_PORT: $MYSQL_DOCKER_PORT
+      PMA_HOST: $MYSQL_HOST
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+  back:
+    build:
+      context: .
+      dockerfile: ./back/Dockerfile
+    image: node-mysql-app
+    env_file: .env
+    ports:
+      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
+    volumes: 
+      - ./back:/back
+      - /back/node_modules
+    depends_on:
+      - mysqldb
+    stdin_open: true
+    tty: true
+  front:
+    build:
+      context: .
+      dockerfile: ./front/Dockerfile
+    env_file: .env
+    ports:
+      - $VUE_LOCAL_PORT:$VUE_DOCKER_PORT
+    volumes:
+      - ./front:/front
+      - /front/node_modules
+    environment: 
+      - CHOKIDAR_USEPOLLING=true

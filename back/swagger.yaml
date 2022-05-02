@@ -1,0 +1,10 @@
+openapi: '3.0.1'
+tags:
+- name: "Point"
+
+components:
+  securitySchemes:
+    token:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

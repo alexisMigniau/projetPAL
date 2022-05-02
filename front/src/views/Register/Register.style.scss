@@ -1,0 +1,42 @@
+@use "../../styles/globals";
+
+.body {
+    width: 500px;
+    padding: 25px 20px;
+    border: 2px solid globals.$lightgrey;
+    h1 {
+        color: globals.$ua_blue;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+    a {
+        color: globals.$ua_blue;
+        margin-top: 15px;
+    }
+    .button {
+        color: globals.$white;
+        background-color: globals.$ua_blue !important;
+        font-weight: bold;
+
+        &:hover {
+            color: globals.$black;
+        }
+    }
+    .redirectionButton:hover {
+        text-decoration: underline;
+    }
+}
+
+.displayError {
+    color: globals.$red;
+}
+
+.displaySuccess {
+    color: globals.$ua_blue;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
