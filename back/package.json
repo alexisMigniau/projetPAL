@@ -6,21 +6,15 @@
 	"repository": "https://gitlab.com/AlexisGG/orchestration-edt",
 	"scripts": {
 		"start": "node index.js",
-		"dev": "nodemon -L --ignore ./test",
-		"prod" : "export ENV=production && node index.js",
-		"test": "export ENV=test && mocha --exit --recursive --timeout 15000"
+		"dev": "nodemon -L",
+		"prod" : "export ENV=production && node index.js"
 	},
 	"dependencies": {
 		"bcrypt": "^5.0.1",
-		"chai": "^4.3.4",
-		"chai-datetime": "^1.8.0",
-		"chai-http": "^4.3.0",
-		"chai-things": "^0.2.0",
 		"dotenv": "^8.2.0",
 		"express": "^4.17.1",
 		"jsonwebtoken": "^8.5.1",
 		"lodash": "^4.17.21",
-		"mocha": "^9.1.1",
 		"morgan": "^1.10.0",
 		"mysql2": "^2.2.5",
 		"nodemon": "^2.0.12",

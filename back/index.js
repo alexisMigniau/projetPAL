@@ -18,9 +18,9 @@ const swaggerOptions = {
     swaggerDefinition: {  
         openapi: '3.0.1',
         info: {  
-            title:'Orchestration API',  
+            title:'Projet PAL',  
             version:'1.0.0',
-            description: "API de gestion des contraintes d'emploi du temps",
+            description: "",
         }  
     },  
 	apis: ["swagger.yaml", "./routes/*.js"]

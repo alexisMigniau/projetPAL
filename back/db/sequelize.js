@@ -41,7 +41,7 @@ Object.keys(db).forEach(function (modelName) {
 
 // This creates the table if it doesn't exist (and does nothing if it already exists)
 db.waitForSync = sequelize
-	.sync({alter: true});
+	.sync({alter : true});
 
 db.waitForSync
 	.then((_result) => {

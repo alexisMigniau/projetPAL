@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.STRING(256),
         allowNull: true
       },
-      adress : {
+      adresse : {
         type: DataTypes.STRING(256),
         allowNull: true
       },
@@ -26,12 +26,25 @@ module.exports = function(sequelize, DataTypes) {
       longitude : {
         type : DataTypes.DECIMAL(9, 6),
         allowNull : false
+      },
+      departement : {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
+      circonscription : {
+        type: DataTypes.INTEGER,
+        allowNull: true
       }
     },
       {
         sequelize,
         tableName: 'panneau',
-        timestamps: false
+        indexes: [
+          {
+              unique: true,
+              fields: ['latitude', 'longitude']
+          }
+        ]
       }
     );
 
