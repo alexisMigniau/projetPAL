@@ -1,6 +1,8 @@
 const sequelize = require('sequelize');
 
 module.exports = (err, req, res, next) => {
+    console.warn(err)
+
     if(err instanceof sequelize.UniqueConstraintError)
     {
         const itemError = err.errors[0];
@@ -11,7 +13,6 @@ module.exports = (err, req, res, next) => {
         res.status(400).send({field : itemError.path, type : itemError.type});
     }
     else{
-        console.warn(err)
         res.sendStatus(500);
     }
 };

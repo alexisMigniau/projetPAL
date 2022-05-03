@@ -36,7 +36,39 @@ module.exports = {
 
         // Ajout de panneau a partir d'un fichier geoJSON
         router.post("/json", async (req, res,next) => {
-            
+            try {
+                if(req.files.file)
+                {
+                    const content = req.files.file.data.toString('utf8');
+                    const data = JSON.parse(content)
+                    
+                    await data.features.forEach(async p => {
+                        const latitude = p.geometry.coordinates[1]
+                        const longitude = p.geometry.coordinates[0]
+
+                        const circ = getCirconscriptions(latitude, longitude)
+                        const adresse = await getAdresseFromGPS(latitude, longitude)
+                        
+                        if(circ)
+                        {
+                            await PanneauModel.create({ 
+                                latitude: latitude, 
+                                longitude: longitude, 
+                                departement : circ.code_dpt, 
+                                circonscription : circ.num_circ,
+                                titre : adresse,
+                                adresse : adresse
+                            });
+                        }
+                    });
+
+                    res.sendStatus(200)
+                } else {
+                    res.status(400).send("Vous n'avez pas envoyer de fichier");
+                }
+            } catch ( err ) {
+                next(err);
+            }
         });
 
         return router;

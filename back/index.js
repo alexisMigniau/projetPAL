@@ -5,6 +5,7 @@ const express = require('express');
 const swaggerJSDoc = require('swagger-jsdoc');  
 const swaggerUI = require('swagger-ui-express');
 const errorHandler = require('./middlewares/errorHandler');
+const fileUpload = require('express-fileupload');
 
 // Environnement de test
 if(process.env.ENV == 'test')
@@ -44,6 +45,9 @@ app.use(express.json());
 
 // Swagger
 app.use('/docs',swaggerUI.serve,swaggerUI.setup(swaggerDocs)); 
+
+// File Upload
+app.use(fileUpload())
 
 // Routes
 require("./routes")(app);
