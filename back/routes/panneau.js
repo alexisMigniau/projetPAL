@@ -1,7 +1,8 @@
 const { panneau: PanneauModel, Sequelize, sequelize } = require('../db/sequelize');
 const requireField = require('../middlewares/requireField');
 const { getCirconscriptions } = require('../services/geo/getCirconscriptions')
-const { getAdresseFromGPS } = require('../services/api/gps')
+const { getAdresseFromGPS } = require('../services/api/gps');
+const { Op } = require('sequelize');
 
 module.exports = {
     path: "/panneau",
@@ -68,6 +69,51 @@ module.exports = {
                 }
             } catch ( err ) {
                 next(err);
+            }
+        });
+
+        // Route pour récupérer les points au format geoJSON selon les paramètres suivants :
+        // latitude et longitude
+        // Radius de recherche en kilomètre
+        // Département et cironscriptions
+        router.get("/", async (req, res, next) => {
+            try {
+                const { latitude, longitude, radius, departement, circonscription } = req.query
+
+                var whereData = {}
+
+                var panneaux = {};
+
+                // Recherche par département, et par circonscription si le paramètre est fournit
+                if(departement) whereData.departement = departement;
+                if(circonscription) whereData.circonscription = circonscription;
+
+                // Recherche par radius autour d'une position
+                if(latitude && longitude && radius)
+                {
+                    panneaux = await PanneauModel.findAll({
+                        attributes : {
+                            include : [
+                                [sequelize.literal("6371 * acos(cos(radians("+latitude+")) * cos(radians(latitude)) * cos(radians("+longitude+") - radians(longitude)) + sin(radians("+latitude+")) * sin(radians(latitude)))"), 'distance']
+                            ]
+                        },
+                        where : [
+                            sequelize.where(sequelize.literal("6371 * acos(cos(radians("+latitude+")) * cos(radians(latitude)) * cos(radians("+longitude+") - radians(longitude)) + sin(radians("+latitude+")) * sin(radians(latitude)))"), {
+                                [Op.lte] : radius
+                            }),
+                            whereData
+                        ]
+                    })
+                } else {
+                    panneaux = await PanneauModel.findAll({
+                        where : whereData
+                    })
+                }
+                
+                res.status(200).send(panneaux);
+            } catch(err)
+            {
+                next(err)
             }
         });
 
