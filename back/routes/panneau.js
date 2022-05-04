@@ -109,8 +109,30 @@ module.exports = {
                         where : whereData
                     })
                 }
+
+                const geoJSON = {
+                    type :"FeatureCollection",
+                    features:[]
+                }
                 
-                res.status(200).send(panneaux);
+                panneaux.forEach(e => {
+                    var data = e.dataValues
+                    geoJSON.features.push({
+                        type: "Feature",
+                        geometry: {
+                            "coordinates": [Number(data.longitude), Number(data.latitude)],
+                            type: "Point"
+                        }, 
+                        properties: { 
+                            departement : data.departement,
+                            circonscription : data.circonscription,
+                            marked : data.marked,
+                            titre : data.titre
+                        }
+                    })
+                })
+
+                res.status(200).send(geoJSON);
             } catch(err)
             {
                 next(err)
