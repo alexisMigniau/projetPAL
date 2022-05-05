@@ -1,6 +1,6 @@
 import { get } from "./utils.js"
 
-export async function getAllPanneaux()
+export async function getPanneaux(departement, circonscriptions)
 {
-    return await get("/panneau")
+    return await get(`/panneau?departement=${departement}&circonscription=${circonscriptions}`)
 }
