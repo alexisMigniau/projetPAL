@@ -139,7 +139,7 @@ module.exports = {
                 // Retourne le path 
                 //const path = await getPathForPoint(arrayPanneaux)
 
-                res.status(200).send(panneaux);
+                res.status(200).send(geoJSON);
             } catch(err)
             {
                 next(err)
