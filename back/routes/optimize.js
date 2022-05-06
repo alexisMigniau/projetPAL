@@ -42,7 +42,7 @@ module.exports = {
                 }
 
                 // Transformation des panneaux en liste de position GPS
-                const arrayPanneaux = []
+                const arrayPanneaux = [`${longitude},${latitude}`]
                 
                 panneaux.forEach(e => {
                     var data = e.dataValues
