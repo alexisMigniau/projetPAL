@@ -19,7 +19,7 @@ module.exports.getPathForPoint = async function(panneaux)
     try{
         const res = await get(`https://eu1.locationiq.com/v1/optimize/driving/${panneaux.join(";")}?key=${TOKEN}&geometries=geojson`);
 
-        return res.trips[0].geometry;
+        return res;
     } catch(error)
     {
         return false;

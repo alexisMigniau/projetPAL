@@ -1,7 +1,7 @@
 const { panneau: PanneauModel, Sequelize, sequelize } = require('../db/sequelize');
 const requireField = require('../middlewares/requireField');
 const { getCirconscriptions } = require('../services/geo/getCirconscriptions')
-const { getAdresseFromGPS, getPathForPoint } = require('../services/api/gps');
+const { getAdresseFromGPS } = require('../services/api/gps');
 const { Op } = require('sequelize');
 
 module.exports = {
@@ -110,13 +110,12 @@ module.exports = {
                     })
                 }
 
+                // Transformation des panneaux au format geoJSON
                 const geoJSON = {
                     type :"FeatureCollection",
                     features:[]
                 }
-
-                const arrayPanneaux = []
-                
+    
                 panneaux.forEach(e => {
                     var data = e.dataValues
                     geoJSON.features.push({
@@ -132,12 +131,7 @@ module.exports = {
                             titre : data.titre
                         }
                     })
-
-                    arrayPanneaux.push(`${data.longitude},${data.latitude}`)
                 })
-
-                // Retourne le path 
-                //const path = await getPathForPoint(arrayPanneaux)
 
                 res.status(200).send(geoJSON);
             } catch(err)
