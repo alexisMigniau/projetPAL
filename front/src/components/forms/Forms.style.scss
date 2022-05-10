@@ -1,0 +1,42 @@
+.forms {
+    height: 75%;
+    width: auto;
+    position: absolute;
+    left: 0;
+    top: 12.5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 10px;
+    z-index: 9999;
+
+    &__buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        img {
+            height: 30px;
+        }
+
+        &__btn {
+            padding: 15px;
+            background-color: white;
+            border: solid 2px black;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &:hover {
+                cursor: pointer;
+                background-color: black;
+
+                img {
+                    filter: invert(100%)
+                }
+            }
+        }
+    }
+}
+
