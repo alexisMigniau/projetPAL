@@ -12,6 +12,21 @@ module.exports.getAdresseFromGPS = async function(latitude, longitude)
     }
 }
 
+module.exports.getGPSFromAdresse = async function(adresse)
+{
+    try{
+        const res = await get(`https://api-adresse.data.gouv.fr/search/?q=${adresse}`);
+
+        return {
+            latitude : res.features[0].geometry.coordinates[1],
+            longitude : res.features[0].geometry.coordinates[0]
+        }
+    } catch(error)
+    {
+        return false;
+    }
+}
+
 module.exports.getPathForPoint = async function(panneaux)
 {
     const TOKEN = "780c9b9de5699f"
