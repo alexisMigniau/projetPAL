@@ -11,7 +11,8 @@
     &__buttons {
         display: flex;
         flex-direction: column;
-        gap: 15px;
+        align-items: center;
+        gap: 10px;
         padding: 0 10px;
 
         img {
@@ -30,9 +31,25 @@
             &_selected {
                 background-color: black;
                 border-color: white;
+                padding: 10px;
+                width: fit-content;
+                position: relative;
 
                 img {
                     filter: invert(100%);
+                    height: 22.5px;
+                }
+
+                &::after {
+                    display: block;
+                    content: "";
+                    width: 22.5px;
+                    height: 8px;
+                    background-color: black;
+                    position: absolute;
+                    top: 50%;
+                    right: 98%;
+                    transform: translateY(-50%);
                 }
 
                 &:hover {
@@ -66,7 +83,7 @@
         transition: width ease-in-out 0.3s;
 
         &_hidden {
-            width: 0;
+            width: 0 !important;
         }
 
         &__close {
@@ -95,3 +112,10 @@
     }
 }
 
+@media only screen and (max-width: 1080px) {
+    .forms {
+        &__panel {
+            width: 80vw;
+        }
+    }
+}
