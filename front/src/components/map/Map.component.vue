@@ -12,9 +12,11 @@
             <l-geo-json
                 :geojson="circonscriptions"
                 :options="optionsCirconscriptions"
+                :options-style="styleCirc"
             />
             <l-geo-json
                 :geojson="path"
+                :options-style="stylePath"
             />
             <l-marker :lat-lng="location"/>
         </l-map>
@@ -96,6 +98,20 @@
             },
             showInfos() {
                 return isMobileDevice()
+            },
+            stylePath() 
+            {
+                return {
+                    weight: 4,
+                    color: "#FFD326",
+                };
+            },
+            styleCirc() {
+                return {
+                    weight: 2,
+                    color: "blue",
+                    fillColor : "white"
+                };
             }
         },
         data() {
