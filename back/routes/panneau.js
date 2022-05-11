@@ -3,6 +3,7 @@ const requireField = require('../middlewares/requireField');
 const { getCirconscriptions } = require('../services/geo/getCirconscriptions')
 const { getAdresseFromGPS, getGPSFromAdresse } = require('../services/api/gps');
 const { Op } = require('sequelize');
+const { isNumber, isBoolean } = require('lodash');
 
 module.exports = {
     path: "/panneau",
@@ -94,6 +95,28 @@ module.exports = {
                 } else {
                     res.status(400).send("Vous n'avez pas envoyer de fichier");
                 }
+            } catch ( err ) {
+                next(err);
+            }
+        });
+
+        // Route pour coller ou decoller un panneau
+        // ID pour récupérer le panneau
+        // Marked pour le coller ou le décoller
+        router.put('/:id/:marked', async(req, res, next) => {
+            try {
+                const { id, marked} = req.params;
+
+                const result = await PanneauModel.update({
+                    marked : marked
+                }, {
+                    where : { id : id}
+                })
+                
+                if(result == 0)
+                    res.status(406).send("Le panneau n'a pas été trouvé ou il est déja collé, décollé")
+                else
+                    res.sendStatus(200)
             } catch ( err ) {
                 next(err);
             }
