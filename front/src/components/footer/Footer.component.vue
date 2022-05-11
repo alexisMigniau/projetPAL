@@ -1,8 +1,5 @@
 <template>
-    <div
-        class="footer"
-        v-bind:class="{ footer_mobile: isMobileDevice }"
-    >
+    <div class="footer">
         <p>Alexis MIGNIAU & Alexis GREGOIRE</p>
         <p>PAL : Panneaux d'Affichage Libre</p>
         <p>M2 ACDI, Faculté des sciences, Angers (49)</p>
@@ -12,7 +9,11 @@
 <script>
 export default {
     name: "Footer",
-    props: ["isMobileDevice"]
+    computed: {
+        showFooter() {
+            return !this.isMobileDevice
+        }
+    }
 };
 </script>
 

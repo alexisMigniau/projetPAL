@@ -32,3 +32,18 @@
         }
     }
 }
+
+@media only screen and (max-width: 680px) {
+    .header {
+        bottom: 75px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .header {
+        bottom: unset;
+        left: unset;
+        top: 20px;
+        right: 20px;
+    }
+}

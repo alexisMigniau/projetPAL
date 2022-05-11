@@ -1,8 +1,5 @@
 <template>
-    <div
-        class="header"
-        v-bind:class="{ header_mobile: isMobileDevice }"
-    >
+    <div class="header">
         <img src="../../assets/icons/pin-solid.svg" alt="Pin"/>
         <span>Panneaux d'Affichage Libre</span>
     </div>
@@ -11,7 +8,7 @@
 <script>
 export default {
     name: "Header",
-    props: ["isMobileDevice"],
+    props: ["isMobileDevice"]
 };
 </script>
 

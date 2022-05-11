@@ -3,7 +3,7 @@
         <Header :v-bind:isMobileDevice="isMobileDevice"/>
         <Forms :v-bind:isMobileDevice="isMobileDevice"/>
         <Map />
-        <Footer :v-bind:isMobileDevice="isMobileDevice"/>
+        <Footer />
     </v-app>
 </template>
 

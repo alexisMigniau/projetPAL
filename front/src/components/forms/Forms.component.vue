@@ -1,11 +1,8 @@
 <template>
-    <div
-        class="forms"
-        v-bind:class="{ forms_mobile: isMobileDevice }"
-    >
+    <div class="forms">
         <div
             class="forms__panel"
-            v-bind:class="{  forms__panel_hidden: doDisplayFormPanel }"
+            v-bind:class="{ forms__panel_hidden: doDisplayFormPanel }"
         >
             <div
                 class="forms__panel__close"
