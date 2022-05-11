@@ -13,6 +13,9 @@
                 :geojson="circonscriptions"
                 :options="optionsCirconscriptions"
             />
+            <l-geo-json
+                :geojson="path"
+            />
             <l-marker :lat-lng="location"/>
         </l-map>
     </div>
@@ -22,7 +25,7 @@
     import {LMap, LTileLayer, LMarker, LGeoJson} from 'vue2-leaflet';
     import L from 'leaflet';
     import 'leaflet/dist/leaflet.css';
-    import { getPanneaux } from '@/services/api/panneaux'
+    import { getPanneaux, getOptimizedPath } from '@/services/api/panneaux'
     import { getCirconscriptions } from '@/services/api/circonscriptions'
 
     import isMobileDevice from "@/helpers/device"
@@ -105,6 +108,7 @@
                 center : [47.478419, -0.563166],
                 panneaux : null,
                 circonscriptions : null,
+                path : null
             };
         },
         methods : {
@@ -136,6 +140,13 @@
                 const req = await getCirconscriptions(departement);
                 req.json().then((data) => {
                     this.circonscriptions = data
+                })
+            },
+            async getPath(latitude, longitude, radius, departement, circonscription)
+            {
+                const req = await getOptimizedPath(latitude, longitude, radius, departement, circonscription);
+                req.json().then((data) => {
+                    this.path = data
                 })
             }
         },
