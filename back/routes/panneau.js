@@ -1,15 +1,16 @@
 const { panneau: PanneauModel, Sequelize, sequelize } = require('../db/sequelize');
 const requireField = require('../middlewares/requireField');
 const { getCirconscriptions } = require('../services/geo/getCirconscriptions')
-const { getAdresseFromGPS, getPathForPoint } = require('../services/api/gps');
+const { getAdresseFromGPS, getGPSFromAdresse } = require('../services/api/gps');
 const { Op } = require('sequelize');
+const { isNumber, isBoolean } = require('lodash');
 
 module.exports = {
     path: "/panneau",
     config : (router) => {
         // Ajout de la position courante GPS
         // Latitude et Longitude en entrée
-        router.post("/current", requireField({'latitude':'integer', 'longitude':'integer'}) ,async (req, res,next) => {
+        router.post("/current", requireField({'latitude':'integer', 'longitude':'integer'}), async (req, res,next) => {
             try {
                 const {latitude, longitude} = req.body
                 // Récupéation des infos de département, circonscription et adresse de ce point gps
@@ -20,6 +21,33 @@ module.exports = {
                     const newPanneau = await PanneauModel.create({ 
                         latitude: req.body.latitude, 
                         longitude: req.body.longitude, 
+                        departement : circ.code_dpt, 
+                        circonscription : circ.num_circ,
+                        titre : adresse,
+                        adresse : adresse
+                    });
+                
+                    res.status(200).send(newPanneau);
+                } else {
+                    res.status(406).send("Ce point n'est dans aucune cironscription et/ou ne correspond à aucune adresse française");
+                }
+            } catch ( err ) {
+                next(err);
+            }
+        });
+
+        // Ajout de la position GPS via une adresse
+        router.post("/adresse" , requireField({'adresse' : 'string'}), async(req, res, next) => {
+            try {
+                const { adresse } = req.body
+                // Récupéation des infos de département, circonscription et adresse de ce point gps
+                const { latitude, longitude } = await getGPSFromAdresse(adresse)
+                const circ = getCirconscriptions(latitude, longitude)
+                if(circ && latitude && longitude)
+                {
+                    const newPanneau = await PanneauModel.create({ 
+                        latitude: latitude, 
+                        longitude: longitude, 
                         departement : circ.code_dpt, 
                         circonscription : circ.num_circ,
                         titre : adresse,
@@ -72,6 +100,28 @@ module.exports = {
             }
         });
 
+        // Route pour coller ou decoller un panneau
+        // ID pour récupérer le panneau
+        // Marked pour le coller ou le décoller
+        router.put('/:id/:marked', async(req, res, next) => {
+            try {
+                const { id, marked} = req.params;
+
+                const result = await PanneauModel.update({
+                    marked : marked
+                }, {
+                    where : { id : id}
+                })
+                
+                if(result == 0)
+                    res.status(406).send("Le panneau n'a pas été trouvé ou il est déja collé, décollé")
+                else
+                    res.sendStatus(200)
+            } catch ( err ) {
+                next(err);
+            }
+        });
+
         // Route pour récupérer les points au format geoJSON selon les paramètres suivants :
         // latitude et longitude
         // Radius de recherche en kilomètre
@@ -110,13 +160,12 @@ module.exports = {
                     })
                 }
 
+                // Transformation des panneaux au format geoJSON
                 const geoJSON = {
                     type :"FeatureCollection",
                     features:[]
                 }
-
-                const arrayPanneaux = []
-                
+    
                 panneaux.forEach(e => {
                     var data = e.dataValues
                     geoJSON.features.push({
@@ -125,19 +174,15 @@ module.exports = {
                             "coordinates": [Number(data.longitude), Number(data.latitude)],
                             type: "Point"
                         }, 
-                        properties: { 
+                        properties: {
+                            id : data.id,
                             departement : data.departement,
                             circonscription : data.circonscription,
                             marked : data.marked,
                             titre : data.titre
                         }
                     })
-
-                    arrayPanneaux.push(`${data.longitude},${data.latitude}`)
                 })
-
-                // Retourne le path 
-                //const path = await getPathForPoint(arrayPanneaux)
 
                 res.status(200).send(geoJSON);
             } catch(err)
