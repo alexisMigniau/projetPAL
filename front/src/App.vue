@@ -2,7 +2,7 @@
     <v-app>
         <Header :v-bind:isMobileDevice="isMobileDevice"/>
         <Forms :v-bind:isMobileDevice="isMobileDevice"/>
-        <Map />
+        <Map :v-bind:isMobileDevice="isMobileDevice"/>
         <Footer />
     </v-app>
 </template>

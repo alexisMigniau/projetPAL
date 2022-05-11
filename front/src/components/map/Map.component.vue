@@ -1,9 +1,13 @@
 <template>
     <div class="map">
+        <div v-if="showInfos" class="infoPoint">
+            <h1>TEST</h1>
+        </div>
         <l-map ref="map" :zoom="zoom" :center="center" @ready="load()">
             <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
             <l-geo-json
                 :geojson="panneaux"
+                :options="optionsPanneaux"
             />
             <l-geo-json
                 :geojson="circonscriptions"
@@ -21,6 +25,8 @@
     import { getPanneaux } from '@/services/api/panneaux'
     import { getCirconscriptions } from '@/services/api/circonscriptions'
 
+    import isMobileDevice from "@/helpers/device"
+
     delete Icon.Default.prototype._getIconUrl;
     Icon.Default.mergeOptions({
         iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
@@ -36,6 +42,7 @@
             LMarker,
             LGeoJson
         },
+        props: ["isMobileDevice"],
         computed : {
             optionsCirconscriptions() {
                 return {
@@ -45,6 +52,23 @@
                         });
                     }
                 }
+            },
+            optionsPanneaux() {
+                return {
+                    onEachFeature :(feature, layer) => {
+                        const content = `
+                        <div>
+                            <p>Adresse : ${feature.properties.titre}</p>
+                            <p>Collé : ${feature.properties.marked ? "Oui" : "Non"}<p>
+                        </div>`
+
+                        if(!isMobileDevice())
+                            layer.bindPopup(content)
+                    }
+                }
+            },
+            showInfos() {
+                return isMobileDevice()
             }
         },
         data() {
