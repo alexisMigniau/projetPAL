@@ -165,6 +165,9 @@
                 const req = await getOptimizedPath(latitude, longitude, radius, departement, circonscription);
                 req.json().then((data) => {
                     this.path = data
+                    // Fit de la carte sur le chemin
+                    let geoJson = L.geoJson(data)
+                    this.map.fitBounds(geoJson.getBounds())
                 })
             }
         },
