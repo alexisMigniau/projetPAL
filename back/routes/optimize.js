@@ -12,7 +12,9 @@ module.exports = {
 
                 const { latitude, longitude, radius, departement, circonscription } = req.query
 
-                var whereData = {}
+                var whereData = {
+                    marked : false
+                }
                 var panneaux = {};
 
                 // Recherche par département, et par circonscription si le paramètre est fournit

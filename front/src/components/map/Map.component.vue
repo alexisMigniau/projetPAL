@@ -117,6 +117,8 @@
                 this.map = this.$refs.map.mapObject
                 this.goToCurrentPos();
                 this.getCirconscriptions(49);
+
+                this.getPath(this.location.lat, this.location.lng, 4, 49, 6)
             },
             goToCurrentPos()
             {
