@@ -8,12 +8,7 @@
 
 <script>
 export default {
-    name: "Footer",
-    computed: {
-        showFooter() {
-            return !this.isMobileDevice
-        }
-    }
+    name: "Footer"
 };
 </script>
 

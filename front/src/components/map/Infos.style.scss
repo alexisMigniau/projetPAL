@@ -1,0 +1,122 @@
+.infos {
+    width: 90%;
+    background-color: rgba(255, 255, 255, 0.85);
+    border: solid 3px black;
+    border-radius: 20px;
+    position: absolute;
+    top: 12.5%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    padding: 10px;
+    padding-right: 35px;
+
+    &__link {
+        text-decoration: none;
+        color: black;
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+        align-items: stretch;
+        padding: 0 10px;
+
+        &:hover {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        img {
+            height: 20px;
+            margin-right: 3px;
+
+            &:hover {
+                height: 22px;
+            }
+        }
+    }
+
+    &__title {
+        font-size: 0.9rem;
+        font-weight: bold;
+        padding: 0;
+        margin-bottom: 10px;
+    }
+
+    &__markContainer {
+        padding: 8px;
+        margin: 0 30px;
+        border-radius: 20px;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &_marked {
+            border: solid 2px #BE250D;
+
+            &:hover {
+                background-color: rgba(#BE250D, 0.1);
+                border-style: solid;
+            }
+        }
+
+        &_free {
+            border: solid 2px #96BE0D;
+
+            &:hover {
+                background-color: rgba(#96BE0D, 0.1);
+                border-style: solid;
+            }
+        }
+
+        &__state {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 5px;
+
+            img {
+                height: 30px;
+            }
+
+            p {
+                font-size: 0.8rem;
+                margin: 0;
+                font-weight: bold;
+                font-style: italic;
+            }
+        }
+
+        &__instruction {
+            font-size: 0.6rem;
+            font-style: italic;
+            text-align: center;
+            margin: 0;
+        }
+    }
+}
+
+.close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 7px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+        background-color: red;
+        cursor: pointer;
+
+        img {
+            filter: invert(100%);
+        }
+    }
+
+    img {
+        height: 12px;
+    }
+}

@@ -1,8 +1,11 @@
 <template>
     <div class="map">
-        <div v-if="showInfos" class="infoPoint">
-            <h1>TEST</h1>
-        </div>
+        <Infos
+            v-if="useMobile && showInfos && isPointInfosFull"
+            :title="pointInfos.titre"
+            :marked="pointInfos.marked"
+            @close="handleClose"
+        />
         <l-map ref="map" :zoom="zoom" :center="center" @ready="load()">
             <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
             <l-geo-json
@@ -30,6 +33,7 @@
     import { getPanneaux, getOptimizedPath } from '@/services/api/panneaux'
     import { getCirconscriptions } from '@/services/api/circonscriptions'
 
+    import { Infos } from "@/components"
     import isMobileDevice from "@/helpers/device"
 
     delete L.Icon.Default.prototype._getIconUrl;
@@ -63,7 +67,8 @@
             LMap,
             LTileLayer,
             LMarker,
-            LGeoJson
+            LGeoJson,
+            Infos
         },
         props: ["isMobileDevice"],
         computed : {
@@ -79,14 +84,21 @@
             optionsPanneaux() {
                 return {
                     onEachFeature :(feature, layer) => {
-                        const content = `
-                        <div>
-                            <p>Adresse : ${feature.properties.titre}</p>
-                            <p>Collé : ${feature.properties.marked ? "Oui" : "Non"}<p>
-                        </div>`
+                        layer.on("click", () => {
+                            if(isMobileDevice()) {
+                                this.pointInfos = feature.properties
+                                this.showInfos = true
+                            } else {
+                                const content = `
+                                    <div>
+                                        <p>Adresse : ${feature.properties.titre}</p>
+                                        <p>Collé : ${feature.properties.marked ? "Oui" : "Non"}<p>
+                                    </div>
+                                `
 
-                        if(!isMobileDevice())
-                            layer.bindPopup(content)
+                                layer.bindPopup(content)
+                            }
+                        })
                     },
                     pointToLayer : (feature, latlng) => {
                         if(feature.properties.marked)
@@ -96,7 +108,7 @@
                     }
                 }
             },
-            showInfos() {
+            useMobile() {
                 return isMobileDevice()
             },
             stylePath() 
@@ -112,6 +124,9 @@
                     color: "blue",
                     fillColor : "white"
                 };
+            },
+            isPointInfosFull() {
+                return Object.keys(this.pointInfos).length !== 0
             }
         },
         data() {
@@ -124,7 +139,9 @@
                 center : [47.478419, -0.563166],
                 panneaux : null,
                 circonscriptions : null,
-                path : null
+                path : null,
+                showInfos: false,
+                pointInfos: {}
             };
         },
         methods : {
@@ -169,6 +186,10 @@
                     let geoJson = L.geoJson(data)
                     this.map.fitBounds(geoJson.getBounds())
                 })
+            },
+            handleClose() {
+                this.pointInfos = {}
+                this.showInfos = false
             }
         },
     };

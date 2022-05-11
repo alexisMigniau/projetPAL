@@ -1,16 +1,14 @@
 <template>
-    <v-app>
-        <Header :v-bind:isMobileDevice="isMobileDevice"/>
-        <Forms :v-bind:isMobileDevice="isMobileDevice"/>
-        <Map :v-bind:isMobileDevice="isMobileDevice"/>
+    <v-app class="app">
+        <Header />
+        <Forms />
+        <Map />
         <Footer />
     </v-app>
 </template>
 
 <script>
 import { Footer, Forms, Header, Map } from "@/components";
-
-import isMobileDevice from "@/helpers/device"
 
 export default {
     name: "App",
@@ -19,11 +17,7 @@ export default {
         Forms,
         Header,
         Map
-    },
-    data: () => ({
-        isMobileDevice: isMobileDevice()
-    }),
-    methods : {}
+    }
 };
 </script>
 
