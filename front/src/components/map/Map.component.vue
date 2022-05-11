@@ -133,8 +133,6 @@
                 this.map = this.$refs.map.mapObject
                 this.goToCurrentPos();
                 this.getCirconscriptions(49);
-
-                this.getPath(this.location.lat, this.location.lng, 4, 49, 6)
             },
             goToCurrentPos()
             {
@@ -143,6 +141,8 @@
                     navigator.geolocation.getCurrentPosition(pos => {
                         this.location = L.latLng(pos.coords.latitude, pos.coords.longitude)
                         this.center = [ pos.coords.latitude,pos.coords.longitude]
+
+                        this.getPath(pos.coords.latitude, pos.coords.longitude, 4 , 49 ,6)
                     })
                 }
             },
