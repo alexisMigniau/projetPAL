@@ -151,7 +151,8 @@ module.exports = {
                             "coordinates": [Number(data.longitude), Number(data.latitude)],
                             type: "Point"
                         }, 
-                        properties: { 
+                        properties: {
+                            id : data.id,
                             departement : data.departement,
                             circonscription : data.circonscription,
                             marked : data.marked,
