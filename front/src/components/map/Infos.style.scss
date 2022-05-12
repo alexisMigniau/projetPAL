@@ -1,7 +1,7 @@
 .infos {
     width: 90%;
-    background-color: rgba(255, 255, 255, 0.85);
-    border: solid 3px black;
+    background-color: rgba(255, 255, 255, 0.95);
+    border: solid 2px black;
     border-radius: 20px;
     position: absolute;
     top: 12.5%;
@@ -9,7 +9,8 @@
     transform: translateX(-50%);
     z-index: 9999;
     padding: 10px;
-    padding-right: 35px;
+    padding-right: 15px;
+    padding-top: 35px;
 
     &__link {
         text-decoration: none;
@@ -22,7 +23,6 @@
 
         &:hover {
             text-decoration: underline;
-            cursor: pointer;
         }
 
         img {
@@ -36,37 +36,19 @@
     }
 
     &__title {
+        width: 100%;
         font-size: 0.9rem;
         font-weight: bold;
         padding: 0;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
     }
 
     &__markContainer {
-        padding: 8px;
-        margin: 0 30px;
-        border-radius: 20px;
+        width: 40%;
+        margin: auto;
 
         &:hover {
             cursor: pointer;
-        }
-
-        &_marked {
-            border: solid 2px #BE250D;
-
-            &:hover {
-                background-color: rgba(#BE250D, 0.1);
-                border-style: solid;
-            }
-        }
-
-        &_free {
-            border: solid 2px #96BE0D;
-
-            &:hover {
-                background-color: rgba(#96BE0D, 0.1);
-                border-style: solid;
-            }
         }
 
         &__state {
@@ -74,25 +56,61 @@
             align-items: center;
             justify-content: center;
             gap: 5px;
+            border-radius: 15px;
+            margin: auto;
             margin-bottom: 5px;
+            padding: 5px 15px;
 
             img {
                 height: 30px;
             }
 
             p {
-                font-size: 0.8rem;
+                font-size: 0.85rem;
                 margin: 0;
                 font-weight: bold;
                 font-style: italic;
             }
+
+            &_marked {
+                border: dashed 1px #BE250D;
+                background-color: rgba(#BE250D, 0.1);
+    
+                &:hover {
+                    background-color: rgba(#BE250D, 0.3);
+                    border: solid 1px #BE250D;
+
+                    & + p {
+                        text-decoration: underline;
+                    }
+                }
+            }
+    
+            &_free {
+                border: dashed 1px #96BE0D;
+                background-color: rgba(#96BE0D, 0.1);
+    
+                &:hover {
+                    background-color: rgba(#96BE0D, 0.3);
+                    border: solid 1px #96BE0D;
+
+                    & + p {
+                        text-decoration: underline;
+                    }
+                }
+            }
         }
 
         &__instruction {
-            font-size: 0.6rem;
+            font-size: 0.5rem;
             font-style: italic;
             text-align: center;
             margin: 0;
+            white-space: nowrap;
+
+            &:hover {
+                text-decoration: underline;
+            }
         }
     }
 }
@@ -119,4 +137,12 @@
     img {
         height: 12px;
     }
+}
+
+.pointId {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-size: 0.65rem;
+    font-style: italic;
 }

@@ -13,7 +13,7 @@
             class="infos__markContainer infos__markContainer_marked"
             v-on:click="switchMark"
         >
-            <div class="infos__markContainer__state">
+            <div class="infos__markContainer__state infos__markContainer__state_marked">
                 <img src="../../assets/icons/marked.png" alt="Drapeau collé"/>
                 <p>Collé</p>
             </div>
@@ -23,10 +23,10 @@
         </div>
         <div
             v-else
-            class="infos__markContainer infos__markContainer_free"
+            class="infos__markContainer"
             v-on:click="switchMark"
         >
-            <div class="infos__markContainer__state">
+            <div class="infos__markContainer__state infos__markContainer__state_free">
                 <img src="../../assets/icons/free.png" alt="Drapeau non collé"/>
                 <p>Non collé</p>
             </div>
@@ -40,13 +40,14 @@
         >
             <img src="../../assets/icons/cross.svg" alt="Close"/>
         </div>
+        <span class="pointId">ID: #{{id}}</span>
     </div>
 </template>
 
 <script>
 export default {
     name: "Infos",
-    props: ["title", "marked"],
+    props: ["title", "marked", "id"],
     computed: {
         gmapUrl() {
             return "https://www.google.fr/maps/place/" + this.title.split(" ").join("+")

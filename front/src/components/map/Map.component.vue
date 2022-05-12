@@ -4,6 +4,7 @@
             v-if="useMobile && showInfos && isPointInfosFull"
             :title="pointInfos.titre"
             :marked="pointInfos.marked"
+            :id="pointInfos.id"
             @close="handleClose"
         />
         <l-map ref="map" :zoom="zoom" :center="center" @ready="load()">
