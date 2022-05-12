@@ -1,7 +1,7 @@
 <template>
     <div class="infos">
         <a :href="gmapUrl" target="_blank" class="infos__link">
-            <p class="infos__title">{{ title }}</p>
+            <p class="infos__title">{{ getTitle }}</p>
             <img
                 src="../../assets/icons/google-maps.svg"
                 alt="Go to Google Maps"
@@ -50,7 +50,14 @@ export default {
     props: ["title", "marked", "id"],
     computed: {
         gmapUrl() {
-            return "https://www.google.fr/maps/place/" + this.title.split(" ").join("+")
+            return this.title === "0"
+                ? null
+                : "https://www.google.fr/maps/place/" + this.title.split(" ").join("+")
+        },
+        getTitle() {
+            return this.title === "0"
+                ? "Adresse non disponible"
+                : this.title
         }
     },
     methods: {
