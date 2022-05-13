@@ -52,10 +52,51 @@ module.exports = {
                 })
 
                 const path = await getPathForPoint(arrayPanneaux)
+
+                // Export des panneaux au format geoJSON
+                var point = []
+
+                for(i = 0; i < path.waypoints.length; i++)
+                {
+                    var w = path.waypoints[i]
+                    if(w.waypoint_index != 0)
+                    {
+                        // Recherche du panneau par rapport à la position
+                        const p = await PanneauModel.findOne({
+                            order : sequelize.literal("6371 * acos(cos(radians("+w.location[1]+")) * cos(radians(latitude)) * cos(radians("+w.location[0]+") - radians(longitude)) + sin(radians("+w.location[1]+")) * sin(radians(latitude))) ASC")
+                        })
+
+                        point.push({
+                            type: "Feature",
+                            geometry: {
+                                "coordinates": [Number(p.dataValues.longitude), Number(p.dataValues.latitude)],
+                                type: "Point"
+                            }, 
+                            properties: {
+                                id : p.dataValues.id,
+                                departement : p.dataValues.departement,
+                                circonscription : p.dataValues.circonscription,
+                                marked : p.dataValues.marked,
+                                titre : p.dataValues.titre,
+                                ordre : w.waypoint_index,
+                            }
+                        })
+                    }
+                }
+
+                // Export du chemin au format geoJSON
                 const geoJSON = path.trips[0]
                 geoJSON.type = "Feature"
                 geoJSON.properties = {}
-                res.status(200).send(geoJSON);
+
+
+                res.status(200).send({
+                    path : geoJSON,
+                    point : {
+                        type :"FeatureCollection",
+                        features : point
+                    }
+                });
             } catch(err)
             {
                 next(err)
