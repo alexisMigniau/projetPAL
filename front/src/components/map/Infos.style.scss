@@ -1,5 +1,6 @@
 .infos {
     width: 90%;
+    max-width: 680px;
     background-color: rgba(255, 255, 255, 0.95);
     border: solid 2px black;
     border-radius: 20px;
@@ -82,12 +83,12 @@
             }
 
             &_marked {
-                border: dashed 1px #BE250D;
-                background-color: rgba(#BE250D, 0.1);
+                border: dashed 1px #96BE0D;
+                background-color: rgba(#96BE0D, 0.1);
     
                 &:hover {
-                    background-color: rgba(#BE250D, 0.3);
-                    border: solid 1px #BE250D;
+                    background-color: rgba(#96BE0D, 0.3);
+                    border: solid 1px #96BE0D;
 
                     & + p {
                         text-decoration: underline;
@@ -96,12 +97,12 @@
             }
     
             &_free {
-                border: dashed 1px #96BE0D;
-                background-color: rgba(#96BE0D, 0.1);
+                border: dashed 1px #BE250D;
+                background-color: rgba(#BE250D, 0.1);
     
                 &:hover {
-                    background-color: rgba(#96BE0D, 0.3);
-                    border: solid 1px #96BE0D;
+                    background-color: rgba(#BE250D, 0.3);
+                    border: solid 1px #BE250D;
 
                     & + p {
                         text-decoration: underline;

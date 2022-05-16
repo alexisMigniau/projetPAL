@@ -1,7 +1,7 @@
 <template>
     <div class="map">
         <Infos
-            v-if="useMobile && showInfos && isPointInfosFull"
+            v-if="showInfos && isPointInfosFull"
             :title="pointInfos.titre"
             :marked="pointInfos.marked"
             :id="pointInfos.id"
@@ -99,6 +99,8 @@
                                 `
 
                                 layer.bindPopup(content)
+                                this.pointInfos = feature.properties
+                                this.showInfos = true
                             }
                         })
                     },
@@ -117,7 +119,7 @@
             {
                 return {
                     weight: 4,
-                    color: "#FFD326",
+                    color: "#ED0692",
                 };
             },
             styleCirc() {

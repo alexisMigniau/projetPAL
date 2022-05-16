@@ -6,7 +6,7 @@
     position: absolute;
     left: 0;
     top: 12.5%;
-    z-index: 9999;
+    z-index: 10000;
 
     &__buttons {
         display: flex;
@@ -176,7 +176,7 @@
         }
 
         &__panel {
-            height: 45vh;
+            height: 30vh;
             width: 100%;
             border: unset;
             border-radius: unset;

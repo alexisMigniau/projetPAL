@@ -14,8 +14,8 @@
             v-on:click="switchMark"
         >
             <div class="infos__markContainer__state infos__markContainer__state_marked">
-                <img src="../../assets/icons/marked.png" alt="Drapeau collé"/>
-                <p>Collé</p>
+                <img src="../../assets/icons/free.png" alt="Drapeau collé"/>
+                <p>Panneau collé</p>
             </div>
             <p class="infos__markContainer__instruction">
                 Cliquez ici pour décoller ce panneau
@@ -27,8 +27,8 @@
             v-on:click="switchMark"
         >
             <div class="infos__markContainer__state infos__markContainer__state_free">
-                <img src="../../assets/icons/free.png" alt="Drapeau non collé"/>
-                <p>Non collé</p>
+                <img src="../../assets/icons/marked.png" alt="Drapeau non collé"/>
+                <p>Panneau non collé</p>
             </div>
             <p class="infos__markContainer__instruction">
                 Cliquez ici pour coller ce panneau
