@@ -6,6 +6,7 @@
             :marked="pointInfos.marked"
             :id="pointInfos.id"
             @close="handleClose"
+            @change="switchMarked"
         />
         <l-map ref="map" :zoom="zoom" :center="center" @ready="load()">
             <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
@@ -205,6 +206,13 @@
             handleClose() {
                 this.pointInfos = {}
                 this.showInfos = false
+            },
+            switchMarked() {
+                this.panneaux.features = this.panneaux.features.map(e => {
+                    if(e.properties.id == this.pointInfos.id)
+                        e.properties.marked = !e.properties.marked
+                    return e
+                })
             }
         },
     };
