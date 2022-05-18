@@ -23,15 +23,15 @@
 
         &:hover {
             text-decoration: underline;
+
+            img {
+                height: 24px;
+            }
         }
 
         img {
             height: 23px;
-            margin-right: 5px;
-
-            &:hover {
-                height: 22px;
-            }
+            margin-right: 10px;
         }
     }
 
@@ -43,7 +43,7 @@
     }
 
     &__markContainer {
-        width: 50%;
+        width: 55%;
         margin: auto;
 
         &::before {
@@ -68,10 +68,10 @@
             border-radius: 15px;
             margin: auto;
             margin-bottom: 5px;
-            padding: 5px 15px;
+            padding: 10px 0;
 
             img {
-                height: 30px;
+                height: 20px;
                 margin-right: 2px;
             }
 

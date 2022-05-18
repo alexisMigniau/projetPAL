@@ -4,7 +4,7 @@
             v-if="formToDisplay === 'search'"
         >
             <img src="../../../assets/icons/search.svg" alt="Search"/>
-            <p>Optimiser son parcours</p>
+            <p>Optimiser mon parcours</p>
         </div>
         <div class="formContainer__header"
             v-if="formToDisplay === 'add'"
