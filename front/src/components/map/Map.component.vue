@@ -30,6 +30,7 @@
 <script>
     import {LMap, LTileLayer, LMarker, LGeoJson} from 'vue2-leaflet';
     import L from 'leaflet';
+    import icons from "leaflet-color-number-markers"
     import 'leaflet/dist/leaflet.css';
     import { getPanneaux, getOptimizedPath } from '@/services/api/panneaux'
     import { getCirconscriptions } from '@/services/api/circonscriptions'
@@ -106,9 +107,18 @@
                     },
                     pointToLayer : (feature, latlng) => {
                         if(feature.properties.marked)
-                            return new L.Marker(latlng, { icon : greenIcon })
-                        else
-                            return new L.Marker(latlng, { icon : redIcon })
+                        {
+                            if(feature.properties.ordre)
+                                return new L.Marker(latlng, { icon : icons.green.numbers[feature.properties.ordre] })
+                            else
+                                return new L.Marker(latlng, { icon : greenIcon })
+                        }
+                        else{
+                            if(feature.properties.ordre)
+                                return new L.Marker(latlng, { icon : icons.red.numbers[feature.properties.ordre] })
+                            else
+                                return new L.Marker(latlng, { icon : redIcon })
+                        }
                     }
                 }
             },
@@ -119,7 +129,7 @@
             {
                 return {
                     weight: 4,
-                    color: "#ED0692",
+                    color: "#4DB3FE",
                 };
             },
             styleCirc() {
@@ -185,9 +195,10 @@
             {
                 const req = await getOptimizedPath(latitude, longitude, radius, departement, circonscription);
                 req.json().then((data) => {
-                    this.path = data
+                    this.path = data.path
+                    this.panneaux = data.point
                     // Fit de la carte sur le chemin
-                    let geoJson = L.geoJson(data)
+                    let geoJson = L.geoJson(data.path)
                     this.map.fitBounds(geoJson.getBounds())
                 })
             },
