@@ -10,6 +10,9 @@
             >
                 <img src="../../assets/icons/cross.svg" alt="Close"/>
             </div>
+            <FormContainer 
+                :formToDisplay="displayedForm"
+            /> 
         </div>
         <div class="forms__buttons">
             <div
@@ -31,9 +34,14 @@
 </template>
 
 <script>
+import { FormContainer } from "@/components";
+
 export default {
     name: "Forms",
     props: ["isMobileDevice"],
+    components: {
+        FormContainer
+    },
     data: () => ({
         displayedForm: ""
     }),

@@ -1,4 +1,5 @@
 export { default as Footer } from "./footer/Footer.component.vue"
+export { default as FormContainer } from "./forms/form-container/FormContainer.component.vue"
 export { default as Forms } from "./forms/Forms.component.vue"
 export { default as Header } from "./header/Header.component.vue"
 export { default as Infos } from "./map/Infos.component.vue"
