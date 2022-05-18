@@ -22,7 +22,9 @@
                 :geojson="path"
                 :options-style="stylePath"
             />
-            <l-marker :lat-lng="location"/>
+            <l-marker
+                :lat-lng="location"
+            />
         </l-map>
     </div>
 </template>
@@ -93,8 +95,8 @@
                             } else {
                                 const content = `
                                     <div>
-                                        <p>Adresse : ${feature.properties.titre}</p>
-                                        <p>Collé : ${feature.properties.marked ? "Oui" : "Non"}<p>
+                                        <p>Adresse : ${feature.properties.titre === "0" ? "Adresse non disponible" : feature.properties.titre}</p>
+                                        <p>${feature.properties.marked ? "Panneau collé" : "Panneau non collé"}<p>
                                     </div>
                                 `
 
