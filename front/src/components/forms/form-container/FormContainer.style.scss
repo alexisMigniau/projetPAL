@@ -45,20 +45,20 @@
 @media only screen and (max-width: 480px) {
     .formContainer {
         &__header {
-            margin-top: 15px;
+            margin-top: 10px;
 
             img {
-                height: 30px;
-                margin-right: 20px;
+                height: 25px;
+                margin-right: 12px;
             }
 
             p {
-                font-size: 1.35rem;
+                font-size: 1.2rem;
             }
         }
 
         &__divider {
-            margin: 20px 0;
+            margin: 15px 0;
         }
     }
 }
