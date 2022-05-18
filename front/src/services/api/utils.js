@@ -2,10 +2,6 @@ async function send_(method, path, data) {
     let headers = {
         "Content-Type": "application/json",
     };
-    if (localStorage.getItem("vuex")) {
-        headers.Authorization =
-            "Bearer " + JSON.parse(localStorage.getItem("vuex")).authentication;
-    }
     return await fetch(path, {
         method: method,
         headers,
