@@ -1,0 +1,51 @@
+.formOptimise {
+    padding: 20px 50px;
+
+    p {
+        font-style: italic;
+    }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.slider {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.button {
+    width: 50%;
+    margin-top: 20px;
+}
+
+@media only screen and (min-width: 480px) {
+    .textfield {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .formOptimise {
+        padding: 0 20px;
+        padding-top: 5px;
+
+        p {
+            font-size: 0.8rem;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+    }
+
+    .slider {
+        display: none;
+    }
+
+    .button {
+        width: 80%;
+        margin-top: -5px;
+    }
+}

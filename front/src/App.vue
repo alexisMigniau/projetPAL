@@ -1,8 +1,14 @@
 <template>
     <v-app class="app">
         <Header />
-        <Forms />
-        <Map />
+        <Forms
+            :dataForOptimization="dataForOptimization"
+            :optimizedPath="optimizedPath"
+        />
+        <Map 
+            :dataForOptimization="dataForOptimization"
+            :optimizedPath="optimizedPath"
+        />
         <Footer />
     </v-app>
 </template>
@@ -17,7 +23,11 @@ export default {
         Forms,
         Header,
         Map
-    }
+    },
+    data: () => ({
+        dataForOptimization: {},
+        optimizedPath: {}
+    })
 };
 </script>
 

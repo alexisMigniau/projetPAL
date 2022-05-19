@@ -74,7 +74,7 @@
             LGeoJson,
             Infos
         },
-        props: ["isMobileDevice"],
+        props: ["isMobileDevice", "dataForOptimization", "optimizedPath"],
         computed : {
             optionsCirconscriptions() {
                 return {
@@ -165,12 +165,17 @@
                         this.location = L.latLng(pos.coords.latitude, pos.coords.longitude)
                         this.center = [ pos.coords.latitude,pos.coords.longitude]
 
-                        this.getPath(pos.coords.latitude, pos.coords.longitude, 4 , 49 ,6)
+                        this.dataForOptimization.latitude = pos.coords.latitude
+                        this.dataForOptimization.longitude = pos.coords.longitude
+
+                        //this.getPath(pos.coords.latitude, pos.coords.longitude, 4 , 49 ,6)
                     })
                 }
             },
             async getPanneaux(departement, circonscriptions)
             {
+                this.dataForOptimization.departement = departement
+                this.dataForOptimization.circonscription = circonscriptions
                 const req = await getPanneaux(departement, circonscriptions);
                 req.json().then((data) => {
                     this.panneaux = data
@@ -197,7 +202,7 @@
                 this.pointInfos = {}
                 this.showInfos = false
             }
-        },
+        }
     };
 </script>
 

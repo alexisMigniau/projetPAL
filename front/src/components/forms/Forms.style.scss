@@ -1,11 +1,11 @@
 .forms {
-    height: 50%;
+    height: 40%;
     width: auto;
     display: flex;
     align-items: center;
     position: absolute;
     left: 0;
-    top: 25%;
+    top: 30%;
     z-index: 10000;
 
     &__buttons {
@@ -83,6 +83,7 @@
 
         &_hidden {
             width: 0 !important;
+            margin-left: -3px;
         }
 
         &__close {
@@ -176,7 +177,7 @@
         }
 
         &__panel {
-            height: 30vh;
+            height: auto;
             width: 100%;
             border: unset;
             border-radius: unset;

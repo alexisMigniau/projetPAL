@@ -12,6 +12,8 @@
             </div>
             <FormContainer 
                 :formToDisplay="displayedForm"
+                :dataForOptimization="dataForOptimization"
+                :optimizedPath="optimizedPath"
             /> 
         </div>
         <div class="forms__buttons">
@@ -38,7 +40,7 @@ import { FormContainer } from "@/components";
 
 export default {
     name: "Forms",
-    props: ["isMobileDevice"],
+    props: ["isMobileDevice", "dataForOptimization", "optimizedPath"],
     components: {
         FormContainer
     },
