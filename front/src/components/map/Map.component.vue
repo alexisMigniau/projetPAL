@@ -136,8 +136,8 @@
             stylePath() 
             {
                 return {
-                    weight: 4,
-                    color: "#4DB3FE",
+                    weight: 5,
+                    color: "black",
                 };
             },
             styleCirc() {
@@ -228,10 +228,11 @@
             }
         },
         watch: {
-            optimizedPath: function(newPath) {
-                this.path = newPath
+            optimizedPath: function(fetchedData) {
+                this.path = fetchedData.path
+                this.panneaux = fetchedData.point
                 // Fit de la carte sur le chemin
-                let geoJson = L.geoJson(newPath)
+                let geoJson = L.geoJson(fetchedData)
                 this.map.fitBounds(geoJson.getBounds())
             },
             radius: function() {
