@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import { updatePanneau } from '@/services/api/panneaux'
+
 export default {
     name: "Infos",
     props: ["title", "marked", "id"],
@@ -65,7 +67,9 @@ export default {
             this.$emit('close')
         },
         //tmp
-        switchMark() {
+        async switchMark() {
+            await updatePanneau(this.id, !this.marked)
+            this.$emit('change')
             this.marked = !this.marked
         }
     }
