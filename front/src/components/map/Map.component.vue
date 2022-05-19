@@ -78,7 +78,8 @@
         props: ["isMobileDevice", "dataForOptimization"],
         computed : {
             ...mapGetters([
-                "optimizedPath"
+                "optimizedPath",
+                "radius"
             ]),
             optionsCirconscriptions() {
                 return {
@@ -125,7 +126,7 @@
             {
                 return {
                     weight: 4,
-                    color: "#ED0692",
+                    color: "deeppink",
                 };
             },
             styleCirc() {
@@ -151,7 +152,8 @@
                 circonscriptions : null,
                 path : null,
                 showInfos: false,
-                pointInfos: {}
+                pointInfos: {},
+                circle: null
             };
         },
         methods : {
@@ -171,8 +173,6 @@
 
                         this.dataForOptimization.latitude = pos.coords.latitude
                         this.dataForOptimization.longitude = pos.coords.longitude
-
-                        //this.getPath(pos.coords.latitude, pos.coords.longitude, 4 , 49 ,6)
                     })
                 }
             },
@@ -214,6 +214,21 @@
                 // Fit de la carte sur le chemin
                 let geoJson = L.geoJson(newPath)
                 this.map.fitBounds(geoJson.getBounds())
+            },
+            radius: function() {
+                if (this.circle !== null && this.map.hasLayer(this.circle)) {
+                    this.map.removeLayer(this.circle)
+                }
+
+                this.circle = L.circle(
+                    this.location,
+                    this.radius * 1000,
+                    {
+                        color: 'red',
+                        fillColor: 'red',
+                        fillOpacity: 0.1,
+                    }
+                ).addTo(this.map);
             }
         }
     };

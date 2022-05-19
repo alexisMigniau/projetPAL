@@ -36,6 +36,7 @@
 
 <script>
 import { FormContainer } from "@/components";
+import { UPDATE_RADIUS } from "@/store/actions.type";
 
 export default {
     name: "Forms",
@@ -57,6 +58,15 @@ export default {
     computed: {
         doDisplayFormPanel() {
             return this.displayedForm.length === 0
+        }
+    },
+    watch: {
+        displayedForm: function(newValue) {
+            if (newValue === "") {
+                this.$store.dispatch(UPDATE_RADIUS, {
+                    radius: null
+                })
+            }
         }
     }
 };

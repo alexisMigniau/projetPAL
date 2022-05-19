@@ -1,3 +1,4 @@
 export default () => ({
-    optimizedPath: null
+    optimizedPath: null,
+    radius: null
 })

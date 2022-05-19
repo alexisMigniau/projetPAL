@@ -5,9 +5,9 @@
             <v-slider
                 class="slider"
                 label="Rayon (km)"
-                max="20"
+                max="30"
                 min="1"
-                step="1"
+                step="0.1"
                 v-model="radius"
                 thumb-label
                 prepend-icon="mdi-radius-outline"
@@ -20,7 +20,7 @@
                 append-icon="mdi-radius-outline"
                 label="Rayon (km)"
                 min="1"
-                max="20"
+                max="30"
                 outlined
                 required
             ></v-text-field>
@@ -38,7 +38,10 @@
 <script>
 import { mapGetters } from "vuex";
 import { getOptimizedPath } from '@/services/api/panneaux'
-import { UPDATE_OPTIMIZED_PATH } from "@/store/actions.type";
+import {
+    UPDATE_OPTIMIZED_PATH,
+    UPDATE_RADIUS
+} from "@/store/actions.type";
 
 export default {
     name: "FormOptimise",
@@ -84,6 +87,11 @@ export default {
     watch: {
         optimized: function(newValue) {
             this.optimizedPath = newValue
+        },
+        radius: function() {
+            this.$store.dispatch(UPDATE_RADIUS, {
+                radius: this.radius
+            })
         }
     }
 };

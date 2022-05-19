@@ -1,1 +1,2 @@
 export const SET_OPTIMIZED_PATH = "SET_OPTIMIZED_PATH";
+export const SET_RADIUS = "SET_RADIUS";
