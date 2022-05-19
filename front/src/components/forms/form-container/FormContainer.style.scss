@@ -6,7 +6,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: 40px;
+        margin-top: 25px;
 
         img {
             height: 45px;
@@ -23,7 +23,7 @@
     &__divider {
         height: 2px;
         width: 100%;
-        margin: 40px 0;
+        margin: 20px 0;
         background: linear-gradient(90deg, white 0%, white 25%, black 25%, black 75%, white 75%, white 100%);;
     }
 }
@@ -58,7 +58,7 @@
         }
 
         &__divider {
-            margin: 15px 0;
+            margin: 10px 0;
         }
     }
 }

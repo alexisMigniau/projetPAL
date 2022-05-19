@@ -5,7 +5,7 @@
             <v-slider
                 class="slider"
                 label="Rayon (km)"
-                max="30"
+                max="20"
                 min="1"
                 step="0.1"
                 v-model="radius"
@@ -20,7 +20,7 @@
                 append-icon="mdi-radius-outline"
                 label="Rayon (km)"
                 min="1"
-                max="30"
+                max="20"
                 outlined
                 required
             ></v-text-field>
@@ -60,7 +60,7 @@ export default {
     },
     methods: {
         async submit() {
-            if (this.radius > 0 && this.radius <= 50) {
+            if (this.radius > 0 && this.radius <= 20) {
                 this.dataForOptimization.radius = this.radius
 
                 const req = await getOptimizedPath(

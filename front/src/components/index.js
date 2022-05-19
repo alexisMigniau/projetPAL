@@ -1,4 +1,5 @@
 export { default as Footer } from "./footer/Footer.component.vue"
+export { default as FormAddPoint } from "./forms/form-add-point/FormAddPoint.component.vue"
 export { default as FormContainer } from "./forms/form-container/FormContainer.component.vue"
 export { default as FormOptimise } from "./forms/form-optimise/FormOptimise.component.vue"
 export { default as Forms } from "./forms/Forms.component.vue"

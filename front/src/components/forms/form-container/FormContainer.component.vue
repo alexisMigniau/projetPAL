@@ -17,17 +17,22 @@
             <p>Ajouter un panneau</p>
         </div>
         <div class="formContainer__divider"></div>
+        <FormAddPoint
+            :dataForOptimization="dataForOptimization"
+        />
     </div>
 </template>
 
 <script>
 import FormOptimise from "../form-optimise/FormOptimise.component.vue"
+import FormAddPoint from "../form-add-point/FormAddPoint.component.vue"
 
 export default {
     name: "FormContainer",
     props: ["formToDisplay", "dataForOptimization"],
     components: {
-        FormOptimise
+        FormOptimise,
+        FormAddPoint
     },
     data: () => ({
 

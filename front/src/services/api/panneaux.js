@@ -20,6 +20,13 @@ async function addPanneauWithAdresse(adresse)
     })
 }
 
+async function addPanneauWithFile(file)
+{
+    return await post('/panneau/json', {
+        file: file
+    })
+}
+
 async function updatePanneau(id, marked)
 {
     return await put(`/panneau/${id}/${marked}`)
@@ -35,5 +42,6 @@ export {
     getPanneaux,
     addPanneauWithAdresse,
     addPanneauWithGPS,
+    addPanneauWithFile,
     updatePanneau
 }

@@ -62,7 +62,7 @@ export default {
     },
     watch: {
         displayedForm: function(newValue) {
-            if (newValue === "") {
+            if (newValue !== "search") {
                 this.$store.dispatch(UPDATE_RADIUS, {
                     radius: null
                 })
