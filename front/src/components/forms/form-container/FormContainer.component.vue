@@ -7,7 +7,6 @@
         <div class="formContainer__divider"></div>
         <FormOptimise
             :dataForOptimization="dataForOptimization"
-            :optimizedPath="optimizedPath"
         />
     </div>
     <div v-else-if="formToDisplay === 'add'" class="formContainer">
@@ -26,7 +25,7 @@ import FormOptimise from "../form-optimise/FormOptimise.component.vue"
 
 export default {
     name: "FormContainer",
-    props: ["formToDisplay", "dataForOptimization", "optimizedPath"],
+    props: ["formToDisplay", "dataForOptimization"],
     components: {
         FormOptimise
     },

@@ -1,0 +1,1 @@
+export const SET_OPTIMIZED_PATH = "SET_OPTIMIZED_PATH";

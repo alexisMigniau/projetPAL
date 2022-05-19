@@ -30,6 +30,7 @@
 </template>
 
 <script>
+    import { mapGetters } from "vuex";
     import {LMap, LTileLayer, LMarker, LGeoJson} from 'vue2-leaflet';
     import L from 'leaflet';
     import 'leaflet/dist/leaflet.css';
@@ -74,8 +75,11 @@
             LGeoJson,
             Infos
         },
-        props: ["isMobileDevice", "dataForOptimization", "optimizedPath"],
+        props: ["isMobileDevice", "dataForOptimization"],
         computed : {
+            ...mapGetters([
+                "optimizedPath"
+            ]),
             optionsCirconscriptions() {
                 return {
                     onEachFeature : (feature, layer) => {
@@ -174,6 +178,7 @@
             },
             async getPanneaux(departement, circonscriptions)
             {
+                this.path = null
                 this.dataForOptimization.departement = departement
                 this.dataForOptimization.circonscription = circonscriptions
                 const req = await getPanneaux(departement, circonscriptions);
@@ -201,6 +206,14 @@
             handleClose() {
                 this.pointInfos = {}
                 this.showInfos = false
+            }
+        },
+        watch: {
+            optimizedPath: function(newPath) {
+                this.path = newPath
+                // Fit de la carte sur le chemin
+                let geoJson = L.geoJson(newPath)
+                this.map.fitBounds(geoJson.getBounds())
             }
         }
     };

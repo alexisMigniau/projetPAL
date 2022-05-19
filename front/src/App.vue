@@ -3,11 +3,9 @@
         <Header />
         <Forms
             :dataForOptimization="dataForOptimization"
-            :optimizedPath="optimizedPath"
         />
         <Map 
             :dataForOptimization="dataForOptimization"
-            :optimizedPath="optimizedPath"
         />
         <Footer />
     </v-app>
@@ -25,8 +23,7 @@ export default {
         Map
     },
     data: () => ({
-        dataForOptimization: {},
-        optimizedPath: {}
+        dataForOptimization: {}
     })
 };
 </script>

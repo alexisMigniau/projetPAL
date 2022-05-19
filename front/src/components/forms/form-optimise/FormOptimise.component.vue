@@ -5,12 +5,14 @@
             <v-slider
                 class="slider"
                 label="Rayon (km)"
-                max="50"
+                max="20"
                 min="1"
                 step="1"
                 v-model="radius"
                 thumb-label
                 prepend-icon="mdi-radius-outline"
+                :hint="hint"
+                persistent-hint
             ></v-slider>
             <v-text-field
                 class="textfield"
@@ -18,7 +20,7 @@
                 append-icon="mdi-radius-outline"
                 label="Rayon (km)"
                 min="1"
-                max="50"
+                max="20"
                 outlined
                 required
             ></v-text-field>
@@ -34,15 +36,25 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { getOptimizedPath } from '@/services/api/panneaux'
+import { UPDATE_OPTIMIZED_PATH } from "@/store/actions.type";
 
 export default {
     name: "FormOptimise",
-    props: ["dataForOptimization", "optimizedPath"],
+    props: ["dataForOptimization"],
     data: () => ({
-        radius: "5",
-        optimized: null
+        radius: "4",
+        result: null
     }),
+    computed: {
+        ...mapGetters([
+            "optimizedPath"
+        ]),
+        hint() {
+            return this.radius + " km"
+        }
+    },
     methods: {
         async submit() {
             if (this.radius > 0 && this.radius <= 50) {
@@ -56,8 +68,14 @@ export default {
                     this.dataForOptimization.circonscription
                 );
                 req.json().then((data) => {
-                    this.optimized = data
+                    this.result = data
                 })
+
+                if (req.status === 200) {
+                    await this.$store.dispatch(UPDATE_OPTIMIZED_PATH, {
+                        optimizedPath: this.result
+                    })
+                }
             } else {
                 alert("Veuillez sélectionner un rayon entre 1 et 50 km.")
             }
