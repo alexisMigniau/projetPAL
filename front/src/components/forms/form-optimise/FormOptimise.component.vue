@@ -31,6 +31,8 @@
             >
                 Rechercher
             </v-btn>
+            <p v-if="message !== '' && !error" class="message">{{message}}</p>
+            <p v-if="message !== '' && error" class="message err">{{message}}</p>
         </v-form>
     </div>
 </template>
@@ -48,7 +50,9 @@ export default {
     props: ["dataForOptimization"],
     data: () => ({
         radius: "4",
-        result: null
+        result: null,
+        message: "",
+        error: false,
     }),
     computed: {
         ...mapGetters([
@@ -59,6 +63,11 @@ export default {
         }
     },
     methods: {
+        resetMessageAfterDelay(delay = 3000) {
+            setTimeout(() => {
+                this.message = ""
+            }, delay)
+        },
         async submit() {
             if (this.radius > 0 && this.radius <= 20) {
                 this.dataForOptimization.radius = this.radius
@@ -78,6 +87,13 @@ export default {
                     await this.$store.dispatch(UPDATE_OPTIMIZED_PATH, {
                         optimizedPath: this.result
                     })
+                    this.error = false
+                    this.message = "Un parcours a été trouvé !"
+                    this.resetMessageAfterDelay()
+                } else {
+                    this.error = true
+                    this.message = "Une erreur est survenue. Veillez à sélectionner une circonscription en cliquant dessus."
+                    this.resetMessageAfterDelay()
                 }
             } else {
                 alert("Veuillez sélectionner un rayon entre 1 et 50 km.")
