@@ -40,7 +40,7 @@
                 Ajouter
             </v-btn>
             <p v-if="message !== '' && !error" class="message">{{message}}</p>
-            <p v-if="message !== '' && error" class="message error">{{message}}</p>
+            <p v-if="message !== '' && error" class="message err">{{message}}</p>
         </v-form>
     </div>
 </template>

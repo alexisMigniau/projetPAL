@@ -19,3 +19,16 @@
 .module, .address, .file {
     width: 100%;
 }
+
+.message {
+    margin-top: 10px;
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    color: green;
+    font-style: italic;
+}
+
+.err {
+    color: red !important;
+}
