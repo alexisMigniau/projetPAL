@@ -1,8 +1,9 @@
 <template>
     <div class="formAddPoint">
+        <p>Veuillez sélectionner un module d'ajout de point(s)</p>
         <v-form class="form" ref="form">
-            <p>Veuillez sélectionner un module d'ajout de point(s)</p>
             <v-select
+                class="module"
                 label="Module"
                 v-model="select"
                 :items="items"

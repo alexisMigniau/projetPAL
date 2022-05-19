@@ -6,7 +6,7 @@
                 class="slider"
                 label="Rayon (km)"
                 max="20"
-                min="1"
+                min="0.1"
                 step="0.1"
                 v-model="radius"
                 thumb-label
@@ -19,7 +19,7 @@
                 v-model="radius"
                 append-icon="mdi-radius-outline"
                 label="Rayon (km)"
-                min="1"
+                min="0"
                 max="20"
                 outlined
                 required
