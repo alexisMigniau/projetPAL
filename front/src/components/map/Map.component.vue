@@ -173,7 +173,6 @@
                 this.map = this.$refs.map.mapObject
                 this.goToCurrentPos();
                 this.getCirconscriptions(49);
-                console.log(this.dataForOptimization)
             },
             goToCurrentPos()
             {

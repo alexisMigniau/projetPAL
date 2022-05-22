@@ -1,6 +1,7 @@
 <template>
     <div class="formOptimise">
-        <p>Veuillez sélectionner un cercle autour de votre position actuelle.</p>
+        <p class="circo">Circonscription sélectionnée : {{dataForOptimization.circonscription}}</p>
+        <p>Veuillez sélectionner un rayon autour de votre position actuelle pour déterminer le secteur du parcours.</p>
         <v-form class="form" ref="form">
             <v-slider
                 class="slider"
@@ -32,7 +33,7 @@
                 Rechercher
             </v-btn>
             <p v-if="message !== '' && !error" class="message">{{message}}</p>
-            <p v-if="message !== '' && error" class="message err">{{message}}</p>
+            <p v-if="message !== '' && error" class="message err" v-html="message"/>
         </v-form>
     </div>
 </template>
@@ -50,9 +51,8 @@ export default {
     props: ["dataForOptimization"],
     data: () => ({
         radius: "4",
-        result: null,
         message: "",
-        error: false,
+        error: false
     }),
     computed: {
         ...mapGetters([
@@ -70,29 +70,31 @@ export default {
         },
         async submit() {
             if (this.radius > 0 && this.radius <= 20) {
-                this.dataForOptimization.radius = this.radius
-
+                let result;
                 const req = await getOptimizedPath(
                     this.dataForOptimization.latitude,
                     this.dataForOptimization.longitude,
-                    this.dataForOptimization.radius,
+                    this.radius,
                     this.dataForOptimization.departement,
                     this.dataForOptimization.circonscription
                 );
-                req.json().then((data) => {
-                    this.result = data
-                })
-
                 if (req.status === 200) {
-                    await this.$store.dispatch(UPDATE_OPTIMIZED_PATH, {
-                        optimizedPath: this.result
+                    result = await req.json().then((data) => {
+                        return data
                     })
+
+                    await this.$store.dispatch(UPDATE_OPTIMIZED_PATH, {
+                        optimizedPath: result
+                    })
+
                     this.error = false
                     this.message = "Un parcours a été trouvé !"
                     this.resetMessageAfterDelay()
                 } else {
                     this.error = true
-                    this.message = "Une erreur est survenue. Veillez à sélectionner une circonscription en cliquant dessus."
+                    this.message = "Une erreur est survenue." +
+                        "<br/>Veillez à sélectionner une circonscription en cliquant dessus." +
+                        "<br/>Veillez à ce que le cercle dessiné contienne des panneaux."
                     this.resetMessageAfterDelay()
                 }
             } else {
