@@ -246,7 +246,6 @@
             },
             refreshLocation() {
                 setInterval(() => {
-                    console.log("hi ! ")
                     this.goToCurrentPos()
                 }, 20000)
             }
