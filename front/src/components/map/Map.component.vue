@@ -40,7 +40,12 @@
     import { getCirconscriptions } from '@/services/api/circonscriptions'
 
     import { Infos } from "@/components"
-    import isMobileDevice from "@/helpers/device"
+
+    import {
+        UPDATE_CURRENT_POSITION,
+        UPDATE_CIRCONSCRIPTION,
+        UPDATE_DEPARTEMENT
+    } from "@/store/actions.type";
 
     delete L.Icon.Default.prototype._getIconUrl;
     L.Icon.Default.mergeOptions({
@@ -77,11 +82,13 @@
             LGeoJson,
             Infos
         },
-        props: ["isMobileDevice", "dataForOptimization"],
         computed : {
             ...mapGetters([
+                "radius",
+                "circonscription",
+                "departement",
                 "optimizedPath",
-                "radius"
+                "refreshPoints"
             ]),
             optionsCirconscriptions() {
                 return {
@@ -96,21 +103,16 @@
                 return {
                     onEachFeature :(feature, layer) => {
                         layer.on("click", () => {
-                            if(isMobileDevice()) {
-                                this.pointInfos = feature.properties
-                                this.showInfos = true
-                            } else {
-                                const content = `
-                                    <div>
-                                        <p>Adresse : ${feature.properties.titre === "0" ? "Adresse non disponible" : feature.properties.titre}</p>
-                                        <p>${feature.properties.marked ? "Panneau collé" : "Panneau non collé"}<p>
-                                    </div>
-                                `
+                            const content = `
+                                <div>
+                                    <p>Adresse : ${feature.properties.titre === "0" ? "Adresse non disponible" : feature.properties.titre}</p>
+                                    <p>${feature.properties.marked ? "Panneau collé" : "Panneau non collé"}<p>
+                                </div>
+                            `
 
-                                layer.bindPopup(content)
-                                this.pointInfos = feature.properties
-                                this.showInfos = true
-                            }
+                            layer.bindPopup(content)
+                            this.pointInfos = feature.properties
+                            this.showInfos = true
                         })
                     },
                     pointToLayer : (feature, latlng) => {
@@ -130,19 +132,16 @@
                     }
                 }
             },
-            useMobile() {
-                return isMobileDevice()
-            },
             stylePath() 
             {
                 return {
-                    weight: 5,
+                    weight: 2,
                     color: "black",
                 };
             },
             styleCirc() {
                 return {
-                    weight: 2,
+                    weight: 3,
                     color: "blue",
                     fillColor : "white"
                 };
@@ -168,11 +167,17 @@
             };
         },
         methods : {
-            load()
+            async load()
             {
+                const tmpDepartement = 49
+
                 this.map = this.$refs.map.mapObject
                 this.goToCurrentPos();
-                this.getCirconscriptions(49);
+                this.getCirconscriptions(tmpDepartement);
+
+                await this.$store.dispatch(UPDATE_DEPARTEMENT, {
+                    departement: tmpDepartement
+                })
             },
             goToCurrentPos()
             {
@@ -182,16 +187,26 @@
                         this.location = L.latLng(pos.coords.latitude, pos.coords.longitude)
                         this.center = [ pos.coords.latitude,pos.coords.longitude]
 
-                        this.dataForOptimization.latitude = pos.coords.latitude
-                        this.dataForOptimization.longitude = pos.coords.longitude
+                        this.$store.dispatch(UPDATE_CURRENT_POSITION, {
+                            currentPosition: [
+                                pos.coords.latitude,
+                                pos.coords.longitude
+                            ]
+                        })
                     })
                 }
             },
             async getPanneaux(departement, circonscriptions)
             {
                 this.path = null
-                this.dataForOptimization.departement = departement
-                this.dataForOptimization.circonscription = circonscriptions
+
+                await this.$store.dispatch(UPDATE_CIRCONSCRIPTION, {
+                    circonscription: circonscriptions
+                })
+                await this.$store.dispatch(UPDATE_DEPARTEMENT, {
+                    departement: departement
+                })
+
                 const req = await getPanneaux(departement, circonscriptions);
                 req.json().then((data) => {
                     this.panneaux = data
@@ -249,6 +264,12 @@
                         fillOpacity: 0.1,
                     }
                 ).addTo(this.map);
+            },
+            refreshPoints: async function() {
+                const req = await getPanneaux(this.departement, this.circonscription);
+                this.panneaux = await req.json().then((data) => {
+                    return data
+                })
             }
         }
     };

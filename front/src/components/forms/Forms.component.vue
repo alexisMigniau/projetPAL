@@ -12,7 +12,6 @@
             </div>
             <FormContainer 
                 :formToDisplay="displayedForm"
-                :dataForOptimization="dataForOptimization"
             /> 
         </div>
         <div class="forms__buttons">
@@ -31,16 +30,21 @@
                 <img src="../../assets/icons/add.svg" alt="Add"/>
             </div>
         </div>
+        <div class="forms__selected">
+            <p>Département : {{departement}}</p>
+            <p v-if="circonscription !== null">Circonscription : {{circonscription}}</p>
+            <p v-else>Vous n'avez pas encore sélectionné de circonscription.</p>
+        </div>
     </div>
 </template>
 
 <script>
 import { FormContainer } from "@/components";
 import { UPDATE_RADIUS } from "@/store/actions.type";
+import { mapGetters } from "vuex";
 
 export default {
     name: "Forms",
-    props: ["isMobileDevice", "dataForOptimization"],
     components: {
         FormContainer
     },
@@ -56,6 +60,10 @@ export default {
         }
     },
     computed: {
+        ...mapGetters([
+            "circonscription",
+            "departement",
+        ]),
         doDisplayFormPanel() {
             return this.displayedForm.length === 0
         }
@@ -64,7 +72,7 @@ export default {
         displayedForm: function(newValue) {
             if (newValue !== "search") {
                 this.$store.dispatch(UPDATE_RADIUS, {
-                    radius: null
+                    radius: 0
                 })
             }
         }

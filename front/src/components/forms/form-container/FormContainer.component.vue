@@ -5,9 +5,7 @@
             <p>Optimiser mon parcours</p>
         </div>
         <div class="formContainer__divider"></div>
-        <FormOptimise
-            :dataForOptimization="dataForOptimization"
-        />
+        <FormOptimise />
     </div>
     <div v-else-if="formToDisplay === 'add'" class="formContainer">
         <div class="formContainer__header"
@@ -17,9 +15,7 @@
             <p>Ajouter un panneau</p>
         </div>
         <div class="formContainer__divider"></div>
-        <FormAddPoint
-            :dataForOptimization="dataForOptimization"
-        />
+        <FormAddPoint />
     </div>
 </template>
 
@@ -29,7 +25,7 @@ import FormAddPoint from "../form-add-point/FormAddPoint.component.vue"
 
 export default {
     name: "FormContainer",
-    props: ["formToDisplay", "dataForOptimization"],
+    props: ["formToDisplay"],
     components: {
         FormOptimise,
         FormAddPoint

@@ -1,9 +1,13 @@
 .formAddPoint {
-    padding: 20px;
+    padding: 10px;
 
     p {
         font-style: italic;
     }
+}
+
+.advice {
+    font-size: 0.9rem;
 }
 
 .form {
@@ -14,6 +18,8 @@
 
 .button {
     width: 50%;
+    text-transform: capitalize;
+    font-size: 1.1rem !important;
 }
 
 .module, .address, .file {
@@ -21,14 +27,21 @@
 }
 
 .message {
-    margin-top: 10px;
+    margin-top: 12px;
     margin-bottom: 0;
     font-size: 0.9rem;
     border-radius: 5px;
     color: green;
     font-style: italic;
+    text-align: center;
 }
 
 .err {
     color: red !important;
+}
+
+@media only screen and (max-width: 480px) {
+    .button {
+        width: 60%;
+    }
 }

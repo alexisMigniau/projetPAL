@@ -66,11 +66,9 @@ export default {
         close() {
             this.$emit('close')
         },
-        //tmp
         async switchMark() {
             await updatePanneau(this.id, !this.marked)
             this.$emit('change')
-            this.marked = !this.marked
         }
     }
 };

@@ -20,11 +20,11 @@ async function addPanneauWithAdresse(adresse)
     })
 }
 
-async function addPanneauWithFile(file)
+async function addPanneauWithFile(formData)
 {
     return await post('/panneau/json', {
-        file: file
-    })
+        "file": formData
+    }, true)
 }
 
 async function updatePanneau(id, marked)

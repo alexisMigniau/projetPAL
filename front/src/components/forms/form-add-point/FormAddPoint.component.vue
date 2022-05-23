@@ -1,6 +1,6 @@
 <template>
     <div class="formAddPoint">
-        <p>Veuillez sélectionner un module d'ajout de point(s)</p>
+        <p class="advice">Veuillez sélectionner un module d'ajout de point(s)</p>
         <v-form class="form" ref="form">
             <v-select
                 class="module"
@@ -36,6 +36,7 @@
                 class="button"
                 color="primary"
                 @click="submit"
+                :disabled="disableBtn"
             >
                 Ajouter
             </v-btn>
@@ -52,15 +53,17 @@ import {
     addPanneauWithFile
 } from '@/services/api/panneaux'
 
+import { mapGetters } from "vuex";
+import { UPDATE_REFRESH_POINTS } from "@/store/actions.type";
+
 export default {
     name: "FormOptimise",
-    props: ["dataForOptimization"],
     data: () => ({
-        select: { mode: "location", hint: "Utiliser la location actuelle" },
+        select: { mode: "location", hint: "Utiliser la localisation actuelle" },
         items: [
-            { mode: "location", hint: "Utiliser la location actuelle" },
+            { mode: "location", hint: "Utiliser la localisation actuelle" },
             { mode: "address", hint: "Entrer une adresse réelle" },
-            { mode: "file", hint: "Télécharger un fichier geojson" }
+            { mode: "file", hint: "Télécharger un fichier .geojson" }
         ],
         address: "",
         file: null,
@@ -68,6 +71,16 @@ export default {
         error: false,
         result: null
     }),
+    computed: {
+        ...mapGetters([
+            "currentPosition",
+            "refreshPoints"
+        ]),
+        disableBtn() {
+            return (this.select.mode === "address" && this.address === "")
+                || (this.select.mode === "file" && this.file === null)
+        }
+    },
     methods: {
         resetMessageAfterDelay(delay = 3000) {
             setTimeout(() => {
@@ -88,14 +101,17 @@ export default {
             }
         },
         async addWithLocation() {
+            console.log("hi !")
             const req = await addPanneauWithGPS(
-                this.dataForOptimization.latitude,
-                this.dataForOptimization.longitude
+                this.currentPosition[0],
+                this.currentPosition[1]
             )
-            req.json().then((data) => {
-                this.result = data
-            })
+
             if (req.status === 200) {
+                await this.$store.dispatch(UPDATE_REFRESH_POINTS, {
+                    refreshPoints: !this.refreshPoints
+                })
+
                 this.error = false
                 this.message = "Votre position actuelle a été ajoutée en tant que nouveau panneau d'affichage libre."
                 this.resetMessageAfterDelay()
@@ -109,10 +125,12 @@ export default {
             const req = await addPanneauWithAdresse(
                 this.address
             )
-            req.json().then((data) => {
-                this.result = data
-            })
+
             if (req.status === 200) {
+                await this.$store.dispatch(UPDATE_REFRESH_POINTS, {
+                    refreshPoints: !this.refreshPoints
+                })
+
                 this.error = false
                 this.message = "Cette adresse a été ajoutée en tant que nouveau panneau d'affichage libre."
                 this.resetMessageAfterDelay()
@@ -123,14 +141,18 @@ export default {
             }
         },
         async addWithFile() {
-            console.log(this.file)
+            const formData = new FormData()
+            formData.append("file", this.file)
+
             const req = await addPanneauWithFile(
-                this.file
+                formData
             )
-            req.json().then((data) => {
-                this.result = data
-            })
+
             if (req.status === 200) {
+                await this.$store.dispatch(UPDATE_REFRESH_POINTS, {
+                    refreshPoints: !this.refreshPoints
+                })
+
                 this.error = false
                 this.message = "Les points GPS contenus dans le tichier téléchargé ont été ajoutés en tant que nouveaux panneaux d'affichage libre."
                 this.resetMessageAfterDelay()

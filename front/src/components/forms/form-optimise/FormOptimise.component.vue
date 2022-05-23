@@ -1,34 +1,40 @@
 <template>
     <div class="formOptimise">
-        <p class="circo">Circonscription sélectionnée : {{dataForOptimization.circonscription}}</p>
-        <p>Veuillez sélectionner un rayon autour de votre position actuelle pour déterminer le secteur du parcours.</p>
+        <p class="circo" v-if="displayCirco">
+            Circonscription sélectionnée : <span>{{circonscription}}</span>
+        </p>
+        <p class="circo circo_err" v-else>Veuillez sélectionner une circonscription en cliquant dessus.</p>
+        <p class="advice">Veuillez sélectionner un cercle autour de votre position actuelle (marqueur jaune) pour déterminer le secteur du parcours.</p>
         <v-form class="form" ref="form">
             <v-slider
                 class="slider"
                 label="Rayon (km)"
                 max="20"
-                min="0.1"
+                min="0"
                 step="0.1"
-                v-model="radius"
+                v-model="myRadius"
                 thumb-label
                 prepend-icon="mdi-radius-outline"
-                :hint="hint"
-                persistent-hint
             ></v-slider>
             <v-text-field
                 class="textfield"
-                v-model="radius"
-                append-icon="mdi-radius-outline"
-                label="Rayon (km)"
-                min="0"
-                max="20"
+                v-model="myRadius"
                 outlined
                 required
+                suffix="km"
+                type="number"
+                step="0.1"
             ></v-text-field>
+            <v-switch
+                v-model="goMarked"
+                :label="`Parcourir les panneaux marqués ? ${goMarked ? 'Oui' : 'Non'}`"
+                class="goMarked"
+            ></v-switch>
             <v-btn
                 class="button"
                 color="primary"
                 @click="submit"
+                :disabled="disableBtn"
             >
                 Rechercher
             </v-btn>
@@ -48,18 +54,29 @@ import {
 
 export default {
     name: "FormOptimise",
-    props: ["dataForOptimization"],
     data: () => ({
-        radius: "4",
+        myRadius: "4",
         message: "",
-        error: false
+        error: false,
+        goMarked: false
     }),
     computed: {
         ...mapGetters([
-            "optimizedPath"
+            "currentPosition",
+            "radius",
+            "circonscription",
+            "departement",
+            "optimizedPath",
+            "refreshPoints"
         ]),
         hint() {
-            return this.radius + " km"
+            return this.myRadius + " km"
+        },
+        displayCirco() {
+            return this.circonscription && this.circonscription !== null
+        },
+        disableBtn() {
+            return !this.displayCirco || this.myRadius <= 0 || this.myRadius > 20
         }
     },
     methods: {
@@ -69,14 +86,14 @@ export default {
             }, delay)
         },
         async submit() {
-            if (this.radius > 0 && this.radius <= 20) {
+            if (this.myRadius > 0 && this.myRadius <= 20) {
                 let result;
                 const req = await getOptimizedPath(
-                    this.dataForOptimization.latitude,
-                    this.dataForOptimization.longitude,
-                    this.radius,
-                    this.dataForOptimization.departement,
-                    this.dataForOptimization.circonscription
+                    this.currentPosition[0],
+                    this.currentPosition[1],
+                    this.myRadius,
+                    this.departement,
+                    this.circonscription
                 );
                 if (req.status === 200) {
                     result = await req.json().then((data) => {
@@ -103,12 +120,9 @@ export default {
         }
     },
     watch: {
-        optimized: function(newValue) {
-            this.optimizedPath = newValue
-        },
-        radius: function() {
+        myRadius: function() {
             this.$store.dispatch(UPDATE_RADIUS, {
-                radius: this.radius
+                radius: this.myRadius
             })
         }
     }
