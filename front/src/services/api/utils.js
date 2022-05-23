@@ -1,20 +1,17 @@
-async function send_(method, path, data) {
-    let headers = {
-        "Content-Type": "application/json",
-    };
-    if (localStorage.getItem("vuex")) {
-        headers.Authorization =
-            "Bearer " + JSON.parse(localStorage.getItem("vuex")).authentication;
-    }
-    return await fetch(path, {
+async function send_(method, path, data, sendFile = false) {
+    let content = {
         method: method,
-        headers,
-        body: JSON.stringify(data),
-    });
+        headers: {
+            "Content-Type": !sendFile ? "application/json" : "multipart/form-data"
+        },
+        body: !sendFile ? JSON.stringify(data) : data
+    }
+
+    return await fetch(path, content);
 }
 
-export async function post(path, data) {
-    return await send_("POST", path, data);
+export async function post(path, data, sendFile = false) {
+    return await send_("POST", path, data, sendFile);
 }
 
 export async function get(path, data) {

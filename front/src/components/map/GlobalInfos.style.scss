@@ -1,0 +1,36 @@
+.globalInfos {
+    position: absolute;
+    z-index: 9999;
+    top: 78%;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 80px;
+    padding: 10px 20px;
+
+    background-color: white;
+    border: solid 2px black;
+    border-radius: 15px;
+
+    p {
+        margin: 0;
+        font-weight: bold;
+    }
+
+    span {
+        color: blue !important;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .globalInfos {
+        left: unset;
+        top: 65px;
+        right: 20px;
+        height: 65px;
+        padding: 3px 10px;
+        font-size: 0.8rem;
+        justify-content: space-evenly;
+    }
+}

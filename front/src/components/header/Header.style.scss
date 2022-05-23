@@ -1,0 +1,49 @@
+.header {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.15rem;
+    padding: 10px 25px;
+    border: solid 3px black;
+    border-radius: 20px;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    z-index: 9999;
+    background-color: white;
+
+    img {
+        height: 40px;
+        margin-right: 15px;
+    }
+}
+
+@media only screen and (max-width: 1080px) {
+    .header {
+        font-size: 0.9rem;
+        padding: 5px 12.5px;
+        top: unset;
+        right: unset;
+        bottom: 40px;
+        left: 20px;
+
+        img {
+            height: 20px;
+        }
+    }
+}
+
+@media only screen and (max-width: 680px) {
+    .header {
+        bottom: 75px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .header {
+        bottom: unset;
+        left: unset;
+        top: 20px;
+        right: 20px;
+    }
+}

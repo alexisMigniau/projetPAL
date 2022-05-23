@@ -1,0 +1,79 @@
+.formOptimise {
+    padding: 10px;
+
+    p {
+        font-style: italic;
+    }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.slider {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.button {
+    width: 50%;
+    margin-top: 20px;
+    text-transform: capitalize;
+    font-size: 1.1rem;
+}
+
+.message {
+    margin-top: 12px;
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    color: green;
+    font-style: italic;
+    text-align: center;
+}
+
+.err {
+    color: red !important;
+}
+
+.circo {
+    font-style: normal !important;
+    font-size: 1.1rem;
+
+    span {
+        font-weight: bold;
+        color: blue
+    }
+
+    &_err {
+        color: red;
+        font-size: 1rem !important;
+    }
+}
+
+.advice {
+    font-size: 0.9rem;
+}
+
+.textfield {
+    width: 30%;
+    margin-right: auto;
+    margin-top: -15px;
+}
+
+.goMarked {
+    margin: 0;
+    margin-right: auto;
+}
+
+@media only screen and (max-width: 480px) {
+    .textfield {
+        width: 40%;
+    }
+
+    .button {
+        width: 60%;
+    }
+}

@@ -6,7 +6,9 @@ async function send_(method, path, data) {
         body: JSON.stringify(data),
     });
 
-    return await res.json();
+    const json = await res.json()
+
+    return json
 }
 
 module.exports = {
