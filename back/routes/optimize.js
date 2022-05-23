@@ -10,14 +10,14 @@ module.exports = {
         router.get('/', async(req, res, next) => {
             try {
 
-                const { latitude, longitude, radius, departement, circonscription } = req.query
+                const { latitude, longitude, radius, departement, circonscription, marked } = req.query
 
-                var whereData = {
-                    marked : false
-                }
+                var whereData = {};
+
                 var panneaux = {};
 
-                // Recherche par département, et par circonscription si le paramètre est fournit
+                // Recherche par département, et par circonscription si le paramètre est fournit, option panneau collée ou non
+                if(marked && marked == "false") whereData.marked = false;
                 if(departement) whereData.departement = departement;
                 if(circonscription) whereData.circonscription = circonscription;
 

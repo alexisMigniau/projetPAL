@@ -93,7 +93,8 @@ export default {
                     this.currentPosition[1],
                     this.myRadius,
                     this.departement,
-                    this.circonscription
+                    this.circonscription,
+                    this.goMarked
                 );
                 if (req.status === 200) {
                     result = await req.json().then((data) => {

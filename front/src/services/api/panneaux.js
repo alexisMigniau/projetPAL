@@ -32,9 +32,9 @@ async function updatePanneau(id, marked)
     return await put(`/panneau/${id}/${marked}`)
 }
 
-async function getOptimizedPath(latitude, longitude, radius, departement, circonscription)
+async function getOptimizedPath(latitude, longitude, radius, departement, circonscription, marked)
 {
-    return await get(`/optimize?latitude=${latitude}&longitude=${longitude}&radius=${radius}&departement=${departement}&circonscription=${circonscription}`)
+    return await get(`/optimize?latitude=${latitude}&longitude=${longitude}&radius=${radius}&departement=${departement}&circonscription=${circonscription}&marked=${marked}`)
 }
 
 export {
