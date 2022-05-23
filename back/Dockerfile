@@ -14,4 +14,4 @@ EXPOSE 3000
 RUN git clone https://github.com/vishnubob/wait-for-it.git /etc/wait
 RUN chmod +x /etc/wait/wait-for-it.sh
 
-CMD ["/etc/wait/wait-for-it.sh", "mysqldb:3306", "-t", "60", "--", "npm", "run", "dev"]
+CMD ["/etc/wait/wait-for-it.sh", "mysqldb:3306", "-t", "60", "--", "npm", "run", "prod"]
