@@ -57,10 +57,26 @@
     font-size: 0.9rem;
 }
 
+.textfieldContainer {
+    display: flex;
+    align-items: flex-start;
+    margin-top: -15px;
+}
+
 .textfield {
     width: 30%;
+    flex-grow: 0;
     margin-right: auto;
-    margin-top: -15px;
+}
+
+.warningMsg {
+    margin: 0;
+    margin-top: 5px;
+    margin-left: 10px;
+    flex-grow: 10;
+    font-size: 0.75rem;
+    font-style: normal !important;
+    color: orange;
 }
 
 .goMarked {

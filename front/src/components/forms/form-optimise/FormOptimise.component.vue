@@ -16,15 +16,18 @@
                 thumb-label
                 prepend-icon="mdi-radius-outline"
             ></v-slider>
-            <v-text-field
-                class="textfield"
-                v-model="myRadius"
-                outlined
-                required
-                suffix="km"
-                type="number"
-                step="0.1"
-            ></v-text-field>
+            <div class="textfieldContainer">
+                <v-text-field
+                    class="textfield"
+                    v-model="myRadius"
+                    outlined
+                    required
+                    suffix="km"
+                    type="number"
+                    step="0.1"
+                ></v-text-field>
+                <p class="warningMsg">Attention: Limite de 25 panneaux</p>
+            </div>
             <v-switch
                 v-model="goMarked"
                 :label="`Parcourir les panneaux marqués ? ${goMarked ? 'Oui' : 'Non'}`"
