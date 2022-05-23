@@ -3,6 +3,7 @@ export { default as FormAddPoint } from "./forms/form-add-point/FormAddPoint.com
 export { default as FormContainer } from "./forms/form-container/FormContainer.component.vue"
 export { default as FormOptimise } from "./forms/form-optimise/FormOptimise.component.vue"
 export { default as Forms } from "./forms/Forms.component.vue"
+export { default as GlobalInfos } from "./map/GlobalInfos.component.vue"
 export { default as Header } from "./header/Header.component.vue"
 export { default as Infos } from "./map/Infos.component.vue"
 export { default as Map } from "./map/Map.component.vue"

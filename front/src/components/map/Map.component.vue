@@ -8,6 +8,7 @@
             @close="handleClose"
             @change="switchMarked"
         />
+        <GlobalInfos />
         <l-map ref="map" :zoom="zoom" :center="center" @ready="load()">
             <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
             <l-geo-json
@@ -39,7 +40,7 @@
     import { getPanneaux, getOptimizedPath } from '@/services/api/panneaux'
     import { getCirconscriptions } from '@/services/api/circonscriptions'
 
-    import { Infos } from "@/components"
+    import { Infos, GlobalInfos } from "@/components"
 
     import {
         UPDATE_CURRENT_POSITION,
@@ -80,7 +81,8 @@
             LTileLayer,
             LMarker,
             LGeoJson,
-            Infos
+            Infos,
+            GlobalInfos
         },
         computed : {
             ...mapGetters([

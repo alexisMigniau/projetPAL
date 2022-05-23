@@ -30,11 +30,6 @@
                 <img src="../../assets/icons/add.svg" alt="Add"/>
             </div>
         </div>
-        <div class="forms__selected">
-            <p>Département : {{departement}}</p>
-            <p v-if="circonscription !== null">Circonscription : {{circonscription}}</p>
-            <p v-else>Vous n'avez pas encore sélectionné de circonscription.</p>
-        </div>
     </div>
 </template>
 
