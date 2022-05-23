@@ -176,6 +176,7 @@
                 this.map = this.$refs.map.mapObject
                 this.goToCurrentPos();
                 this.getCirconscriptions(tmpDepartement);
+                this.refreshLocation();
 
                 await this.$store.dispatch(UPDATE_DEPARTEMENT, {
                     departement: tmpDepartement
@@ -242,6 +243,12 @@
                         e.properties.marked = !e.properties.marked
                     return e
                 })
+            },
+            refreshLocation() {
+                setInterval(() => {
+                    console.log("hi ! ")
+                    this.goToCurrentPos()
+                }, 20000)
             }
         },
         watch: {
