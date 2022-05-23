@@ -3,6 +3,7 @@
         <p class="globalInfos__departement">
             Département : <span>{{departement}}</span>
         </p>
+        <hr>
         <p v-if="circonscription !== null" class="globalInfos__circonscription">
             Circonscription : <span>{{circonscription}}</span>
         </p>
