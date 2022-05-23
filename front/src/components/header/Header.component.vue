@@ -1,5 +1,5 @@
 <template>
-    <div class="header">
+    <div class="header" v-on:click="() => displayOurNames()">
         <img src="../../assets/icons/pin-solid.svg" alt="Pin"/>
         <span>Panneaux d'Affichage Libre</span>
     </div>
@@ -8,7 +8,12 @@
 <script>
 export default {
     name: "Header",
-    props: ["isMobileDevice"]
+    props: ["isMobileDevice"],
+    methods: {
+        displayOurNames() {
+            alert("Application réalisée par Alexis GREGOIRE et Alexis MIGNIAU, étudiants en M2 Informatique (ACDI) à Angers.")
+        }
+    }
 };
 </script>
 
